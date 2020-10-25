@@ -3,12 +3,12 @@ const { Model, DataTypes } = require('sequelize')
 class User extends Model {
     static init(sequelize) {
         super.init({
-            name: DataTypes.STRING,
-            email: DataTypes.STRING,
-            password: DataTypes.STRING,
-            cellphone: DataTypes.STRING,
-            cpf: DataTypes.STRING,
-            address: DataTypes.STRING,
+            name: DataTypes.STRING(50),
+            email: DataTypes.STRING(50),
+            password: DataTypes.STRING(50),
+            cellphone: DataTypes.STRING(12),
+            cpf: DataTypes.STRING(12),
+            address: DataTypes.STRING(1000),
             is_deleted: DataTypes.BOOLEAN
         }, {
             sequelize,
@@ -18,6 +18,7 @@ class User extends Model {
         })
 
     }
+
 
 }
 

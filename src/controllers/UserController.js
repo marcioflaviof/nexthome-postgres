@@ -10,7 +10,11 @@ module.exports = {
     async getUser(req, res) {
         const user = await User.findByPk(req.params.id)
 
-        return res.json(user)
+        if (user.is_deleted == false) {
+            return res.json(user)
+        }
+
+        return res.status(400).json({ err: 'User not found' })
     },
 
     async createUser(req, res) {
@@ -27,7 +31,7 @@ module.exports = {
 
         const user = await User.findByPk(id)
         
-        if(!user) {
+        if(!user || user.is_deleted == true) {
             return res.status(400).json({ err: 'User not found' })
         }
 

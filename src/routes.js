@@ -20,7 +20,9 @@ routes.put('/update/house/:id', HouseController.updateHouse)
 routes.delete('/delete/house/:id', HouseController.deleteHouse)
 
 //Available Routes
+routes.get('/available/:house/:day', AvailableController.getDayAvailable)
 routes.post('/register/available', AvailableController.createAvailable)
-routes.get('/available/:day',AvailableController.getDayAvailable)
+routes.put('/update/available/:id', AvailableController.updateAvailable)
+routes.delete('/delete/available/:id', AvailableController.deleteAvailable)
 
 module.exports = routes

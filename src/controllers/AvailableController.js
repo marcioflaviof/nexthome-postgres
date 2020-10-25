@@ -24,11 +24,52 @@ module.exports = {
     },
 
     async getDayAvailable(req, res) {
-        const { day } = req.params
+        const { house, day } = req.params
 
         const date = new Date(day);
 
-        const available = await Available.findOne({where: {day_week: date.getDay()}})
+        const available = await Available.findOne({where: {house_id: house, day_week: date.getDay()}})
+        return res.json(available)
+    },
+
+    async updateAvailable(req, res){
+        const { id } = req.params
+        const { password, initial_hour, final_hour, day_week} = req.body
+
+        const available = await Available.findOne({where: {id: id, day_week: day_week},
+            include: {association: 'house', include: {association: 'owner'}}})
+        console.log(available)
+        if(!available || available.is_deleted == true) {
+            return res.status(400).json({ err: 'Available not found' })
+        }
+        
+        if(available.house.owner.password != password){
+            return res.status(400).json({ err: 'Wrong password' }) 
+        }
+        
+        available.update({ initial_hour, final_hour })
+
+        return res.json(available) 
+    },
+
+    async deleteAvailable(req, res) {
+        const id = req.params.id
+
+        const { password } = req.body
+
+        const available = await Available.findOne({where: {id: id},include: {association: 'house',include:{association:'owner'}}})
+
+        if(!available || available.is_deleted == true) {
+            return res.status(400).json({ err: 'Available not found' })
+        }
+
+        if(available.house.owner.password != password){
+            return res.status(400).json({ err: 'Wrong password' }) 
+        }
+
+        
+        available.update({is_deleted:true})
+
         return res.json(available)
     }
 

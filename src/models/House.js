@@ -10,7 +10,7 @@ class House extends Model {
             number_bedroom: DataTypes.INTEGER,
             number_bath: DataTypes.INTEGER,
             to_sell: DataTypes.BOOLEAN,
-            is_deleted: DataTypes.BOOLEAN,
+            is_deleted: DataTypes.BOOLEAN
         }, {
             sequelize,
             modelName: 'tb_house',

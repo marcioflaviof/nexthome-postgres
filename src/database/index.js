@@ -1,3 +1,6 @@
+require('dotenv').config()
+
+
 const Sequelize = require('sequelize')
 const dbConfig = require('../config/database')
 
@@ -6,7 +9,7 @@ const House = require('../models/House')
 const Available = require('../models/Available')
 const Visit = require('../models/Visit')
 
-const connection = new Sequelize(dbConfig)
+const connection = new Sequelize(process.env.DATABASE_URL, dbConfig)
 
 User.init(connection)
 House.init(connection)

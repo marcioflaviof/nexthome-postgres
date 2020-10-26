@@ -16,8 +16,7 @@ class Visit extends Model {
     }
 
     static associate(models) {
-        this.belongsTo(models.tb_user, { foreignKey: 'user_id', as: 'user'})
-        this.belongsTo(models.tb_user, { foreignKey: 'house_id', as: 'house'})
+        this.belongsTo(models.tb_house, { foreignKey: 'house_id', as: 'house'})
     }
 
 }

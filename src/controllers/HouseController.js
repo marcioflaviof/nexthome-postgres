@@ -42,7 +42,7 @@ module.exports = {
         }
         
         
-        house.update({ id, land_size, price, address, description, number_bedroom, number_bath, local, to_sell })
+        house.update({ land_size, price, address, description, number_bedroom, number_bath, local, to_sell })
 
         return res.json(house)
     },

@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const House = require('../models/House')
 const User = require('../models/User')
 const Visit = require('../models/Visit')
@@ -30,5 +31,30 @@ module.exports = {
 
         return res.json({inserted: visit})
     },
+
+   
+    async updateVisit(req, res) {
+
+        const { day_hour_visit, is_confirmed } = req.body
+        const { id } = req.params
+
+        const visit = await Visit.findOne({where: {
+            id: id}, 
+            include: {association: 'house', include: {association: 'owner'}}})
+
+        console.log(visit)
+        
+        if(!visit || visit.is_deleted == true) {
+            return res.status(400).json({ err: 'Appointment not found' })
+        }
+        
+        
+        
+        visit.update({ day_hour_visit, is_confirmed })
+
+        return res.json(visit)
+    },
+
+
 
 }

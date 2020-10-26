@@ -36,7 +36,7 @@ module.exports = {
         }
 
         if (user.email == email && user.password == password) {
-            user.update({ id, name, password, cellphone, cpf, address })
+            user.update({ name, password, cellphone, cpf, address })
 
             return res.json(user)
         }

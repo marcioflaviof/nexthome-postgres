@@ -59,7 +59,7 @@ module.exports = {
 
         const { password } = req.body
 
-        const available = await Available.findOne({where: {id: id},include: {association: 'house',include:{association:'owner'}}})
+        const available = await Available.findOne({where: {id: id},include: {association: 'house', include:{association:'owner'}}})
 
         if(!available || available.is_deleted == true) {
             return res.status(400).json({ err: 'Available not found' })

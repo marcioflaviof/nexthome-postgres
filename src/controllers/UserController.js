@@ -10,11 +10,11 @@ module.exports = {
     async getUser(req, res) {
         const user = await User.findByPk(req.params.id)
 
-        if (user.is_deleted == false) {
-            return res.json(user)
+        if (!user || user.is_deleted == true) {
+            return res.status(400).json({ err: 'User not found' })
         }
-
-        return res.status(400).json({ err: 'User not found' })
+        
+        return res.json(user)
     },
 
     async createUser(req, res) {
@@ -36,7 +36,6 @@ module.exports = {
         }
 
         if (user.email == email && user.password == password) {
-
             user.update({ id, name, password, cellphone, cpf, address })
 
             return res.json(user)

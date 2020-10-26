@@ -3,6 +3,7 @@ const express = require('express')
 const UserController = require('./controllers/UserController')
 const HouseController = require('./controllers/HouseController')
 const AvailableController = require('./controllers/AvailableController')
+const VisitController = require('./controllers/VisitController')
 
 const routes = express.Router()
 
@@ -24,5 +25,10 @@ routes.get('/available/:house/:day', AvailableController.getDayAvailable)
 routes.post('/register/available', AvailableController.createAvailable)
 routes.put('/update/available/:id', AvailableController.updateAvailable)
 routes.delete('/delete/available/:id', AvailableController.deleteAvailable)
+
+//Visit Routes
+routes.get('/visit/:id/', VisitController.getVisit)
+routes.post('/register/visit/:user_id/:house_id', VisitController.createVisit)
+
 
 module.exports = routes

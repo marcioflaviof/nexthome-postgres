@@ -8,14 +8,13 @@ module.exports = {
         const { house_id,initial_hour,final_hour,day_week } = req.body
 
         const house = await House.findByPk(house_id)
-        console.log(house)
         if (!house || house.is_deleted == true) {
             return res.status(400).json({ err: 'House not found' })
         }
         // como regra de negócio só permitiremos cadastrar um dia da semana uma unica vez
         const available = await Available.findOne({where: {day_week: day_week}})
         if (available){
-            return res.status(400).json({err: 'available already exists'})
+            return res.status(400).json({err: 'Available already exists'})
         }
 
         const inserted_available  = await Available.create({  house_id, initial_hour, final_hour, day_week })
@@ -36,9 +35,12 @@ module.exports = {
         const { id } = req.params
         const { password, initial_hour, final_hour, day_week} = req.body
 
-        const available = await Available.findOne({where: {id: id, day_week: day_week},
-            include: {association: 'house', include: {association: 'owner'}}})
-        console.log(available)
+        const available = await Available.findOne({
+            where: {
+                id: id, 
+                day_week: day_week},
+                include: {association: 'house', include: {association: 'owner'}}})
+
         if(!available || available.is_deleted == true) {
             return res.status(400).json({ err: 'Available not found' })
         }

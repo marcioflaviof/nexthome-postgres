@@ -41,8 +41,6 @@ module.exports = {
         const visit = await Visit.findOne({where: {
             id: id}, 
             include: {association: 'house', include: {association: 'owner'}}})
-
-        console.log(visit)
         
         if(!visit || visit.is_deleted == true) {
             return res.status(400).json({ err: 'Appointment not found' })
@@ -55,6 +53,21 @@ module.exports = {
         return res.json(visit)
     },
 
+    async deleteVisit(req, res) {
+        const { id } = req.params
 
+        const visit = await Visit.findOne({where: {
+            id: id}, 
+            include: {association: 'house', include: {association: 'owner'}}})
+    
 
+        if (!visit) {
+            return res.statu(400).json({ err: 'Appointment not found' })
+        }
+
+        visit.update({is_deleted:true})
+
+        return res.json(visit)
+
+    }
 }

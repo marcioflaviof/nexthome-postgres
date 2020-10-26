@@ -30,6 +30,7 @@ routes.delete('/delete/available/:id', AvailableController.deleteAvailable)
 routes.get('/visit/:id/', VisitController.getVisit)
 routes.post('/register/visit/:user_id/:house_id', VisitController.createVisit)
 routes.put('/update/visit/:id', VisitController.updateVisit)
+routes.delete('/delete/visit/:id', VisitController.deleteVisit)
 
 
 

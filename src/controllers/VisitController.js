@@ -1,4 +1,3 @@
-const { where } = require('sequelize')
 const House = require('../models/House')
 const User = require('../models/User')
 const Visit = require('../models/Visit')

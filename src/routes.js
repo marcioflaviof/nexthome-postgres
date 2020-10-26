@@ -7,6 +7,9 @@ const VisitController = require('./controllers/VisitController')
 
 const routes = express.Router()
 
+
+routes.get('/', function(req, res){ res.send("Hello World")})
+
 // User Routes
 routes.get('/users', UserController.getUsers)
 routes.get('/user/:id', UserController.getUser)

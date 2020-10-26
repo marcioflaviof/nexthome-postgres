@@ -18,23 +18,28 @@ module.exports = {
     async createVisit(req, res) {
 
         const { day_hour_visit, is_confirmed } = req.body
-        const {house_id, user_id} = req.params
+        const { house_id, user_id } = req.params
+
 
         const house = await House.findByPk(house_id)
         const user = await User.findByPk(user_id)
+
         if (!house || house.is_deleted == true || !user || user.is_deleted == true) {
             return res.status(400).json({ err: 'House not found' })
         }
+        
+        const visit = await Visit.create({ house_id, user_id, day_hour_visit, is_confirmed })
 
-        const visit  = await Visit.create({ house_id, user_id, day_hour_visit, is_confirmed })
 
-        return res.json({inserted: visit})
+        return res.json(visit)
+
+
     },
 
    
     async updateVisit(req, res) {
 
-        const { day_hour_visit, is_confirmed } = req.body
+        const { password, day_hour_visit, is_confirmed } = req.body
         const { id } = req.params
 
         const visit = await Visit.findOne({where: {
@@ -45,11 +50,16 @@ module.exports = {
             return res.status(400).json({ err: 'Appointment not found' })
         }
         
-        
+        if(password != visit.house.owner.password){
+
+            return res.status(400).json({ err: 'Wrong password' })
+
+        }
         
         visit.update({ day_hour_visit, is_confirmed })
-
         return res.json(visit)
+
+
     },
 
     async deleteVisit(req, res) {

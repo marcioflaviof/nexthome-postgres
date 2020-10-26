@@ -31,7 +31,7 @@ module.exports = {
         const id = req.params.id
         const { password, land_size, price, address, description, number_bedroom, number_bath, local, to_sell } = req.body
 
-        const house = await House.findOne({where: {id: id},include: 'owner'})
+        const house = await House.findOne({where: {id: id}, include: 'owner'})
         
         if(!house || house.is_deleted == true) {
             return res.status(400).json({ err: 'House not found' })

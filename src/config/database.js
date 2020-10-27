@@ -7,6 +7,7 @@ require('dotenv').config()
         host: process.env.DB_H_HOST,
         port: process.env.DB_H_PORT,
         database: process.env.DB_NAME,
+        SSL: true,
         define: {
             timestamps: true,
             underscored: true
@@ -20,6 +21,7 @@ require('dotenv').config()
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASS,
         database: process.env.DB_NAME,
+        SSL:true,
         define: {
             timestamps: true,
             underscored: true

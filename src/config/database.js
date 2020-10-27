@@ -3,7 +3,7 @@ require('dotenv').config()
 
     module.exports = {
         dialect: process.env.DIALECT,
-        host: process.env.DB_H_HOST,
+        host: "https://nexthome-back.herokuapp.com/",
         port: process.env.DB_H_PORT,
         database: process.env.DB_NAME,
         username: process.env.DB_H_USERNAME,

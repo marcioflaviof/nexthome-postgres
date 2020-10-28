@@ -4,6 +4,7 @@ const UserController = require('./controllers/UserController')
 const HouseController = require('./controllers/HouseController')
 const AvailableController = require('./controllers/AvailableController')
 const VisitController = require('./controllers/VisitController')
+const TDetailController = require('./controllers/TDetailController')
 
 const routes = express.Router()
 
@@ -34,6 +35,13 @@ routes.get('/visit/:id/', VisitController.getVisit)
 routes.post('/register/visit/:house_id/:user_id', VisitController.createVisit)
 routes.put('/update/visit/:id', VisitController.updateVisit)
 routes.delete('/delete/visit/:id', VisitController.deleteVisit)
+
+//TypeDetail Routes
+routes.get('/tdetail/:id', TDetailController.getTDetail)
+routes.post('/register/tdetail/:user_id', TDetailController.createTDetail)
+routes.post('/update/tdetail/:id', TDetailController.updateTDetail)
+routes.post('/update/tdetail/:id', TDetailController.deleteTDetail)
+
 
 
 

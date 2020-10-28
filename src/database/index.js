@@ -8,6 +8,7 @@ const User = require('../models/User')
 const House = require('../models/House')
 const Available = require('../models/Available')
 const Visit = require('../models/Visit')
+const TypeDetail = require('../models/TypeDetail')
 
 var connection = null
 
@@ -21,9 +22,11 @@ User.init(connection)
 House.init(connection)
 Available.init(connection)
 Visit.init(connection)
+TypeDetail.init(connection)
 
 House.associate(connection.models)
 Available.associate(connection.models)
 Visit.associate(connection.models)
+TypeDetail.associate(connection.models)
 
 module.exports = connection

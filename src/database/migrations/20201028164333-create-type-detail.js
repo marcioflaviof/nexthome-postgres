@@ -2,21 +2,13 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-     await queryInterface.createTable('ta_visit', { 
+     await queryInterface.createTable('td_type_detail', { 
         
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
-      },
-
-      house_id:{
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'tb_house', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
       },
 
       user_id:{
@@ -27,13 +19,13 @@ module.exports = {
         onDelete: 'CASCADE'
       },
 
-      day_hour_visit:{
-        type: Sequelize.DATE,
+      name: {
+        type: Sequelize.STRING(50),
         allowNull: false
       },
 
-      is_confirmed:{
-        type: Sequelize.BOOLEAN,
+      description: {
+        type: Sequelize.TEXT,
         allowNull: false
       },
 
@@ -56,6 +48,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('ta_visit');
+    await queryInterface.dropTable('td_type_detail');
   }
 };

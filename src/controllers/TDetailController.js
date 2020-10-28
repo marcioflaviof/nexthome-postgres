@@ -37,7 +37,7 @@ module.exports = {
             return res.status(400).json({ err: 'Type of detail not found' })
         }
         
-        tdetail.update({ name,description })
+        tdetail.update({ name, description })
 
         return res.json(tdetail)
     },

@@ -17,7 +17,7 @@ class Detail extends Model {
 
     static associate(models) {
         this.belongsTo(models.tb_house, { foreignKey: 'house_id', as: 'house'})
-        this.belongsTo(models.tb_user, { foreignKey: 'type_detail_id', as: 'type_detail'})
+        this.belongsTo(models.td_type_detail, { foreignKey: 'type_detail_id', as: 'type_detail'})
     }
 
 }

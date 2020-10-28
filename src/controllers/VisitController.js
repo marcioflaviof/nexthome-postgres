@@ -63,6 +63,7 @@ module.exports = {
     },
 
     async deleteVisit(req, res) {
+        const { password } = req.body
         const { id } = req.params
 
         const visit = await Visit.findOne({where: {
@@ -70,8 +71,15 @@ module.exports = {
             include: {association: 'house', include: {association: 'owner'}}})
     
 
-        if (!visit) {
+        if (!visit || visit.is_deleted == true) {
             return res.statu(400).json({ err: 'Appointment not found' })
+        }
+
+
+        if(password != visit.house.owner.password){
+
+            return res.status(400).json({ err: 'Wrong password' })
+
         }
 
         visit.update({is_deleted:true})

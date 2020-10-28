@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const bcrypt = require("bcryptjs")
 
 module.exports = {
     async getUsers(req, res) {
@@ -35,11 +36,12 @@ module.exports = {
             return res.status(400).json({ err: 'User not found' })
         }
 
-        if (user.email == email && user.password == password) {
+        if (user.email == email && bcrypt.compareSync(password, user.password)) {
             user.update({ name, password, cellphone, cpf, address })
 
             return res.json(user)
         }
+
 
 
         return res.status(400).json({ err: "Can't update"})

@@ -72,7 +72,7 @@ module.exports = {
     
 
         if (!visit || visit.is_deleted == true) {
-            return res.statu(400).json({ err: 'Appointment not found' })
+            return res.status(400).json({ err: 'Appointment not found' })
         }
 
 

@@ -5,6 +5,7 @@ const HouseController = require('./controllers/HouseController')
 const AvailableController = require('./controllers/AvailableController')
 const VisitController = require('./controllers/VisitController')
 const TDetailController = require('./controllers/TDetailController')
+const DetailController = require('./controllers/DetailController')
 
 const routes = express.Router()
 

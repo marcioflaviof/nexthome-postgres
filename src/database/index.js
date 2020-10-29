@@ -2,7 +2,6 @@ require('dotenv').config()
 
 const Sequelize = require('sequelize')
 const dbConfig = require('../config/database')
-const hConfig = require('../config/herokudb')
 
 const User = require('../models/User')
 const House = require('../models/House')
@@ -13,12 +12,8 @@ const Detail = require('../models/Detail')
 
 var connection = null
 
+var connection = new Sequelize(dbConfig.development)
 
-if (process.env.LOCAL == "true") {
-    var connection = new Sequelize(hConfig)
-} else {
-    var connection = new Sequelize(dbConfig)
-}
 
 User.init(connection)
 House.init(connection)

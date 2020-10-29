@@ -41,7 +41,7 @@ routes.delete('/delete/visit/:id', VisitController.deleteVisit)
 routes.get('/tdetail/:id', TDetailController.getTDetail)
 routes.post('/register/tdetail/:user_id', TDetailController.createTDetail)
 routes.put('/update/tdetail/:id', TDetailController.updateTDetail)
-routes.delete('/update/tdetail/:id', TDetailController.deleteTDetail)
+routes.delete('/delete/tdetail/:id', TDetailController.deleteTDetail)
 
 //Detail Routes
 routes.get('/detail/:id', DetailController.getDetail)

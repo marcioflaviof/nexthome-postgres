@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false
       },
 
-      user_id:{
+      user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'tb_user', key: 'id' },

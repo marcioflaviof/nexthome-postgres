@@ -29,12 +29,12 @@ module.exports = {
 
       description: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
       },
       
       number: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: true
       },
 
       is_deleted: {

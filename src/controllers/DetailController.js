@@ -1,11 +1,11 @@
-const Detail = require('../models/TypeDetail')
+const Detail = require('../models/Detail')
 const House = require('../models/House')
 const TypeDetail = require('../models/TypeDetail')
 
 module.exports = {
 
     async getDetail(req, res) {
-        const detail = await Detail.findByPk(req.params.id)
+        const detail = await Detail.findByPk(req.params.id, {include:["house","type_detail"]})
         if (!detail || detail.is_deleted) {
             return res.status(400).json({ err: 'Type detail not found' })
         }
@@ -27,7 +27,7 @@ module.exports = {
             return res.status(400).json({ err: 'Type Detail not found'})
         }
 
-        const detail = await Detail.create({  house_id, type_detail_id, description, number })
+        const detail = await Detail.create({ house_id, type_detail_id, description, number })
 
         return res.json(detail)
     },
@@ -37,7 +37,7 @@ module.exports = {
         const id = req.params.id
         const { description, number } = req.body
 
-        const detail = await TDetail.findOne({where: {id: id}, include: 'user', include: 'type_detail'})
+        const detail = await Detail.findOne({where: {id: id}, include: 'user', include: 'type_detail'})
         
         if(!detail || detail.is_deleted) {
             return res.status(400).json({ err: 'Type of detail not found' })
@@ -45,7 +45,7 @@ module.exports = {
         
         detail.update({ description, number })
 
-        return res.json(tdetail)
+        return res.json(detail)
     },
 
     async deleteDetail(req, res) {

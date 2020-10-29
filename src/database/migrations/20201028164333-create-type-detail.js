@@ -26,7 +26,7 @@ module.exports = {
 
       description: {
         type: Sequelize.TEXT,
-        allowNull: false
+        allowNull: true
       },
 
       is_deleted: {

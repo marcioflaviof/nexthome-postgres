@@ -21,7 +21,7 @@ module.exports = {
             return res.status(400).json({ err: 'User not found' })
         }
 
-        const tdetail = await TDetail.create({  user_id, name, description })
+        const tdetail = await TDetail.create({ user_id, name, description })
 
         return res.json(tdetail)
     },

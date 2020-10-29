@@ -13,10 +13,9 @@ const Detail = require('../models/Detail')
 var connection = null
 
 if (!process.env.LOCAL){
-    var connection = new Sequelize(dbConfig.development)
-} else {
     var connection = new Sequelize(dbConfig.production)
-
+} else {
+    var connection = new Sequelize(dbConfig.development)
 }
 
 User.init(connection)

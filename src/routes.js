@@ -1,5 +1,6 @@
 const express = require('express')
 
+const LoginController = require('./controllers/LoginController')
 const UserController = require('./controllers/UserController')
 const HouseController = require('./controllers/HouseController')
 const AvailableController = require('./controllers/AvailableController')
@@ -11,6 +12,9 @@ const routes = express.Router()
 
 
 routes.get('/', function(req, res){ res.send("Hello World")})
+
+// Login Route
+routes.post("/login", LoginController.login)
 
 // User Routes
 routes.get('/users', UserController.getUsers)

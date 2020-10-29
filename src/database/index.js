@@ -15,9 +15,9 @@ var connection = null
 
 
 if (process.env.LOCAL == "true") {
-    var connection = new Sequelize(dbConfig)
-} else {
     var connection = new Sequelize(hConfig)
+} else {
+    var connection = new Sequelize(dbConfig)
 }
 
 User.init(connection)

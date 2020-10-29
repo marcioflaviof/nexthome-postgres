@@ -38,7 +38,7 @@ module.exports = {
             return res.status(400).json({ err: 'House not found' })
         }
         
-        if(house.owner.password && bcrypt.compareSync(password, house.owner.password)){
+        if(!bcrypt.compareSync(password, house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
         
@@ -58,8 +58,8 @@ module.exports = {
         if(!house || house.is_deleted == true) {
             return res.status(400).json({ err: 'House not found' })
         }
-
-        if(house.owner.password && bcrypt.compareSync(password, house.owner.password)){
+        console.log(bcrypt.compareSync(password, house.owner.password))
+        if(!bcrypt.compareSync(password, house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
 

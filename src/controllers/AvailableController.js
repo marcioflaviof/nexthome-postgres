@@ -46,7 +46,7 @@ module.exports = {
             return res.status(400).json({ err: 'Available not found' })
         }
         
-        if(available.house.owner.password && bcrypt.compareSync(password, available.house.owner.password)){
+        if(!bcrypt.compareSync(password, available.house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
         
@@ -66,7 +66,7 @@ module.exports = {
             return res.status(400).json({ err: 'Available not found' })
         }
 
-        if(available.house.owner.password && bcrypt.compareSync(password, available.house.owner.password)){
+        if(!bcrypt.compareSync(password, available.house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
 

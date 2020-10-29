@@ -28,7 +28,13 @@ module.exports = {
             return res.status(400).json({ err: 'House not found' })
         }
         
-        const visit = await Visit.create({ house_id, user_id, day_hour_visit, is_confirmed })
+        let visit
+
+        try {
+            visit = await Visit.create({ house_id, user_id, day_hour_visit, is_confirmed })
+        } catch (error) {
+            return res.status(400).json({ err: error.message })
+        }
 
 
         return res.json(visit)

@@ -20,8 +20,15 @@ module.exports = {
         if (!user || user.is_deleted == true) {
             return res.status(400).json({ err: 'User not found' })
         }
+        let tdetail
+        
+        try {
+            tdetail = await TDetail.create({ user_id, name, description })
+            
+        } catch (error) {
+            return res.status(400).json({ err: error.message })
+        }
 
-        const tdetail = await TDetail.create({ user_id, name, description })
 
         return res.json(tdetail)
     },

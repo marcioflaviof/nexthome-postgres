@@ -27,7 +27,14 @@ module.exports = {
             return res.status(400).json({ err: 'Type Detail not found'})
         }
 
-        const detail = await Detail.create({ house_id, type_detail_id, description, number })
+        let detail
+
+        try {
+            detail = await Detail.create({ house_id, type_detail_id, description, number })
+            
+        } catch (error) {
+            return res.status(400).json({ err: error.message })
+        }
 
         return res.json(detail)
     },

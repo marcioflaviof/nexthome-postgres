@@ -22,7 +22,13 @@ module.exports = {
             return res.status(400).json({ err: 'User not found' })
         }
 
-        const house = await House.create({  user_id, land_size, price, address, description, number_bedroom, number_bath, local, to_sell })
+        let house
+
+        try {
+            house = await House.create({  user_id, land_size, price, address, description, number_bedroom, number_bath, local, to_sell })
+        } catch (error) {
+            return res.status(400).json({ err: error.message })
+        }
 
         return res.json(house)
     },
@@ -58,13 +64,13 @@ module.exports = {
         if(!house || house.is_deleted == true) {
             return res.status(400).json({ err: 'House not found' })
         }
-        console.log(bcrypt.compareSync(password, house.owner.password))
+
         if(!bcrypt.compareSync(password, house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
 
-        
         house.update({is_deleted:true})
+  
 
         return res.json(house)
     }

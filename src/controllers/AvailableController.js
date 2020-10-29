@@ -18,7 +18,14 @@ module.exports = {
             return res.status(400).json({err: 'Available already exists'})
         }
 
-        const inserted_available  = await Available.create({  house_id, initial_hour, final_hour, day_week })
+        let inserted_available
+
+        try {
+            inserted_available  = await Available.create({  house_id, initial_hour, final_hour, day_week })
+        } catch (error) {
+            return res.status(400).json({ err: error.message })
+        }
+
 
         return res.json({inserted: inserted_available})
     },

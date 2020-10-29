@@ -20,9 +20,14 @@ module.exports = {
 
     async createUser(req, res) {
         const { name, email, password, cellphone, cpf, address } = req.body
-
-        const user = await User.create({  name, email, password, cellphone, cpf, address })
-
+        let user
+        
+        try{
+        user = await User.create({  name, email, password, cellphone, cpf, address })
+        } catch(error) {
+            return res.status(400).json({ err: error.message })
+        }
+    
         return res.json(user)
     },
 

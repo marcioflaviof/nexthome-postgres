@@ -40,14 +40,14 @@ routes.delete('/delete/visit/:id', VisitController.deleteVisit)
 //TypeDetail Routes
 routes.get('/tdetail/:id', TDetailController.getTDetail)
 routes.post('/register/tdetail/:user_id', TDetailController.createTDetail)
-routes.post('/update/tdetail/:id', TDetailController.updateTDetail)
-routes.post('/update/tdetail/:id', TDetailController.deleteTDetail)
+routes.put('/update/tdetail/:id', TDetailController.updateTDetail)
+routes.delete('/update/tdetail/:id', TDetailController.deleteTDetail)
 
 //Detail Routes
 routes.get('/detail/:id', DetailController.getDetail)
 routes.post('/register/detail/:house_id/:type_detail_id', DetailController.createDetail)
-routes.post('/update/detail/:id', DetailController.updateDetail)
-routes.post('/update/detail/:id', DetailController.deleteDetail)
+routes.put('/update/detail/:id', DetailController.updateDetail)
+routes.delete('/update/detail/:id', DetailController.deleteDetail)
 
 
 module.exports = routes

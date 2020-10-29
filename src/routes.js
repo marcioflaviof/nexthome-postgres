@@ -47,7 +47,7 @@ routes.delete('/update/tdetail/:id', TDetailController.deleteTDetail)
 routes.get('/detail/:id', DetailController.getDetail)
 routes.post('/register/detail/:house_id/:type_detail_id', DetailController.createDetail)
 routes.put('/update/detail/:id', DetailController.updateDetail)
-routes.delete('/update/detail/:id', DetailController.deleteDetail)
+routes.delete('/delete/detail/:id', DetailController.deleteDetail)
 
 
 module.exports = routes

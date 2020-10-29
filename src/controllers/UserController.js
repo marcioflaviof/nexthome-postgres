@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs")
 
 module.exports = {
     async getUsers(req, res) {
-        const users = await User.findAll()
+        const users = await User.findAll({where:{is_deleted:false}})
 
         return res.json(users)
     },
@@ -57,7 +57,7 @@ module.exports = {
             return res.status(400).json({ err: 'User not found' })
         }
 
-        if (user.email == email && user.password == password) {
+        if (user.email == email && bcrypt.compareSync(password, user.password)) {
             
 
             user.update({is_deleted:true})

@@ -13,12 +13,11 @@ const Detail = require('../models/Detail')
 
 var connection = null
 
-console.log(process.env.LOCAL)
 
-if (process.env.LOCAL) {
+if (process.env.LOCAL == "true") {
     var connection = new Sequelize(dbConfig)
 } else {
-    var connection = new Sequelize(DATABASE_URL, hConfig)
+    var connection = new Sequelize(hConfig)
 }
 
 User.init(connection)

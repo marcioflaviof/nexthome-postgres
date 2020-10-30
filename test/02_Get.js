@@ -10,7 +10,6 @@ var userIdg
 var houseIdg
 var typeDetailIdg
 var visitIdg
-var availableIdg
 var detailIdg
 
 describe('GET TESTS', () => {

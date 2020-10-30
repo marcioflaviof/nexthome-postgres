@@ -14,10 +14,10 @@ var connection = null
 
 if (!process.env.LOCAL){
     var connection = new Sequelize(dbConfig.production)
-    console.log("connected on prodution")
+    console.log("Connected on prodution")
 } else {
     var connection = new Sequelize(dbConfig.development)
-    console.log("connected on development")
+    console.log("Connected on development")
 }
 
 User.init(connection)

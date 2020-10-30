@@ -1,6 +1,7 @@
 const House = require('../models/House')
 const User = require('../models/User')
 const Visit = require('../models/Visit')
+const bcrypt = require("bcryptjs")
 
 module.exports = {
 
@@ -56,7 +57,7 @@ module.exports = {
             return res.status(400).json({ err: 'Appointment not found' })
         }
         
-        if(password != visit.house.owner.password){
+        if(!bcrypt.compareSync(password, visit.house.owner.password)){
 
             return res.status(400).json({ err: 'Wrong password' })
 
@@ -82,7 +83,7 @@ module.exports = {
         }
 
 
-        if(password != visit.house.owner.password){
+        if(!bcrypt.compareSync(password, visit.house.owner.password)){
 
             return res.status(400).json({ err: 'Wrong password' })
 

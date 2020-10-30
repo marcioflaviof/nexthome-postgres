@@ -99,7 +99,7 @@ module.exports = {
             return res.status(400).json({ err: 'Available not found' })
         }
 
-        if(!bcrypt.compareSync(password, available.house.owner.password)){
+        if(!password || !bcrypt.compareSync(password, available.house.owner.password)){
             return res.status(400).json({ err: 'Wrong password' }) 
         }
 

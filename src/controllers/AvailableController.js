@@ -29,7 +29,7 @@ module.exports = {
         }
 
 
-        return res.json({inserted: inserted_available})
+        return res.json({ inserted_available })
     },
 
     async getDayAvailable(req, res) {

@@ -31,7 +31,7 @@ routes.delete('/delete/house/:id', HouseController.deleteHouse)
 
 //Available Routes
 routes.get('/available/:house/:day', AvailableController.getDayAvailable)
-routes.post('/register/available', AvailableController.createAvailable)
+routes.post('/register/available/:house_id', AvailableController.createAvailable)
 routes.put('/update/available/:id', AvailableController.updateAvailable)
 routes.delete('/delete/available/:id', AvailableController.deleteAvailable)
 

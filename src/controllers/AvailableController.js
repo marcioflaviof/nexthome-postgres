@@ -6,7 +6,9 @@ module.exports = {
 
     async createAvailable(req, res) {
 
-        const { house_id,initial_hour,final_hour,day_week } = req.body
+        const { house_id } = req.params
+
+        const { initial_hour,final_hour,day_week } = req.body
 
         const house = await House.findByPk(house_id)
         if (!house || house.is_deleted == true) {

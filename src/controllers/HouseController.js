@@ -13,6 +13,12 @@ module.exports = {
         return res.json(house)
     },
 
+    async getHouses(req, res) {
+        const houses = await House.findAll({where:{is_deleted:false}, include:'owner'})
+
+        return res.json(houses)
+    },
+
     async createHouse(req, res) {
 
         const { user_id } = req.params

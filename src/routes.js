@@ -25,6 +25,7 @@ routes.delete('/delete/user/:id', UserController.deleteUser)
 
 //House Routes
 routes.get('/house/:id', HouseController.getHouse)
+routes.get('/houses', HouseController.getHouses)
 routes.post('/register/house/:user_id', HouseController.createHouse)
 routes.put('/update/house/:id', HouseController.updateHouse)
 routes.delete('/delete/house/:id', HouseController.deleteHouse)

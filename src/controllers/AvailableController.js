@@ -69,13 +69,12 @@ module.exports = {
     async updateAvailable(req, res){
         const { id } = req.params
         const { password, initial_hour, final_hour, day_week} = req.body
-
         const available = await Available.findOne({
             where: {
                 id: id, 
                 day_week: day_week},
                 include: {association: 'house', include: {association: 'owner'}}})
-
+                
         if(!available || available.is_deleted == true) {
             return res.status(400).json({ err: 'Available not found' })
         }

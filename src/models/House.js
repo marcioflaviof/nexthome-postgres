@@ -22,6 +22,7 @@ class House extends Model {
 
     static associate(models) {
         this.belongsTo(models.tb_user, { foreignKey: 'user_id', as: 'owner'})
+        this.hasMany(models.ta_available, { foreignKey: 'house_id', as: 'availables'})
     }
 
 }

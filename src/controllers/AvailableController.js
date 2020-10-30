@@ -15,7 +15,7 @@ module.exports = {
             return res.status(400).json({ err: 'House not found' })
         }
         // como regra de negócio só permitiremos cadastrar um dia da semana uma unica vez
-        const available = await Available.findOne({where: {day_week: day_week}})
+        const available = await Available.findOne({where: {day_week: day_week,house_id: house_id}})
         if (available){
             return res.status(400).json({err: 'Available already exists'})
         }
@@ -37,8 +37,33 @@ module.exports = {
 
         const date = new Date(day);
 
-        const available = await Available.findOne({where: {house_id: house, day_week: date.getDay()}})
+        const available = await Available.findOne(
+            {where: 
+                {
+                house_id: house, 
+                day_week: date.getDay(),
+                is_deleted: 'false'
+                }
+            }
+        )
         return res.json(available)
+        
+    },
+
+    async getHouseAvailable(req, res){
+        const{house} = req.params
+        const availables = await House.findAll(
+            {where: {id: house, is_deleted: 'false'},
+            attributes: ['id','address','description'],
+            include: 
+                {
+                association: 'availables',
+                attributes: ['initial_hour','final_hour','day_week'],
+                where: {is_deleted: 'false'}
+                },
+            order: [['availables','day_week','ASC']]
+            })
+        return res.json(availables)
     },
 
     async updateAvailable(req, res){

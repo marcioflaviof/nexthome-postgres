@@ -1,5 +1,14 @@
 const express = require('express')
 
+//IMAGE TEST
+const multer = require('multer')
+const multerConfig = require('./config/multer')
+const User = require('./models/User')
+const House = require('./models/House')
+const Picture = require("./models/Picture")
+const ImageController = require('./controllers/PictureController')
+
+//NORMAL CONFIGS
 const LoginController = require('./controllers/LoginController')
 const UserController = require('./controllers/UserController')
 const HouseController = require('./controllers/HouseController')
@@ -54,6 +63,23 @@ routes.get('/detail/:id', DetailController.getDetail)
 routes.post('/register/detail/:house_id/:type_detail_id', DetailController.createDetail)
 routes.put('/update/detail/:id', DetailController.updateDetail)
 routes.delete('/delete/detail/:id', DetailController.deleteDetail)
+
+//Image Routes
+routes.post('/register/image/:user_id/:house_id', multer(multerConfig).single('file'), async (req, res) => {
+
+    const { originalname: name, size, filename: key} = req.file
+
+    const { user_id, house_id } = req.params
+
+    try {
+        const picture = await Picture.create({ user_id, house_id, name, size, key, url:'' })
+        return res.json(picture)
+    } catch (error) {
+        return res.status(400).json({ err: error.message })
+    }
+    
+})
+
 
 
 module.exports = routes

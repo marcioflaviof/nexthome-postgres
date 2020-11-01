@@ -14,16 +14,17 @@ class Picture extends Model {
             freezeTableName: true,
             hooks: {
                 beforeCreate: (picture, options) => {
+                    
                     if(process.env.LOCAL){
                         if(!picture.url){
                             picture.url = `http://${process.env.DB_HOST}:${process.env.PORT}/files/${picture.key}`
                         } 
-                        if(!process.env.LOCAL){
-                            if(!picture.url){
-                                picture.url = `https://nexthome-back.herokuapp.com/files/${picture.key}`
+                    } else {
+                        if(!picture.url){
+                            picture.url = `https://nexthome-back.herokuapp.com/files/${picture.key}`
                         }
-                    }
                 }
+                
             }
         }
 

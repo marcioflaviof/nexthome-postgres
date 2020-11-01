@@ -17,7 +17,8 @@ class Picture extends Model {
                     if(process.env.LOCAL){
                         if(!picture.url){
                             picture.url = `http://${process.env.DB_HOST}:${process.env.PORT}/files/${picture.key}`
-                        } else {
+                        } 
+                        if(!process.env.LOCAL){
                             if(!picture.url){
                                 picture.url = `https://nexthome-back.herokuapp.com/files/${picture.key}`
                         }

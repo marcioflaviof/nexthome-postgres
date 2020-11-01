@@ -19,7 +19,7 @@ class Picture extends Model {
                             picture.url = `http://${process.env.DB_HOST}:${process.env.PORT}/files/${picture.key}`
                         } else {
                             if(!picture.url){
-                                picture.url = `http://${process.env.DB_H_HOST}:${process.env.DB_H_PORT}/files/${picture.key}`
+                                picture.url = `${process.env.HEROKU_HOST}/files/${picture.key}`
                         }
                     }
                 }

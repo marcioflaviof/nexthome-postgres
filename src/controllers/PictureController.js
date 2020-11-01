@@ -5,6 +5,12 @@ const Picture = require("../models/Picture")
 
 module.exports = {
 
+    async getImage(req, res) {
+        const picture = await Picture.findAll({where:{is_deleted:false}})
+
+        return res.json(picture)
+    },
+
     async createImage(req, res) {
 
         const { originalname: name, size, filename: key} = req.file
@@ -26,5 +32,14 @@ module.exports = {
             }
         }
         
+    },
+
+    async deleteImage(req, res) {
+
+        const picture = await Picture.findByPk(req.params.id)
+
+        picture.update({is_deleted:true})
+
+        return res.json(picture)
     }
 }

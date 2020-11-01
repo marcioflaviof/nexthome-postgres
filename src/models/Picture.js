@@ -1,5 +1,5 @@
+require('dotenv').config()
 const { Model, DataTypes } = require('sequelize')
-
 class Picture extends Model {
     static init(sequelize) {
         super.init({
@@ -11,11 +11,24 @@ class Picture extends Model {
         }, {
             sequelize,
             modelName: 'ta_picture',
-            freezeTableName: true
+            freezeTableName: true,
+            hooks: {
+                beforeCreate: (picture, options) => {
+                    if(process.env.LOCAL){
+                        if(!picture.url){
+                            picture.url = `http://${process.env.DB_HOST}:${process.env.PORT}/files/${picture.key}`
+                        } else {
+                            if(!picture.url){
+                                picture.url = `http://${process.env.DB_H_HOST}:${process.env.DB_H_PORT}/files/${picture.key}`
+                        }
+                    }
+                }
+            }
+        }
 
-        })
+    })
 
-    }
+}
 
     static associate(models) {
         this.belongsTo(models.tb_user, { foreignKey: 'user_id', as: 'user'})
@@ -23,5 +36,6 @@ class Picture extends Model {
     }
 
 }
+
 
 module.exports = Picture

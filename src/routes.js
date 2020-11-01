@@ -62,7 +62,9 @@ routes.put('/update/detail/:id', DetailController.updateDetail)
 routes.delete('/delete/detail/:id', DetailController.deleteDetail)
 
 //Image Routes
+routes.get('/images', ImageController.getImage)
 routes.post('/register/image/:user_id/:house_id', multer(multerConfig).single('file'), ImageController.createImage)
+routes.delete('/image/:id', ImageController.deleteImage)
 
 
 

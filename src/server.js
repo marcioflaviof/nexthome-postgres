@@ -1,14 +1,17 @@
-require('dotenv').config()
-const path = require("path")
-const express = require('express')
-const routes = require('./routes')
+require("dotenv").config();
+const path = require("path");
+const express = require("express");
+const routes = require("./routes");
 
-require('./database')
+require("./database");
 
-const app = express()
+const app = express();
 
-app.use(express.json())
-app.use(routes)
-app.use("/files", express.static(path.resolve(__dirname, "..", "tmp", "uploads")))
+app.use(express.json());
+app.use(routes);
+app.use(
+  "/files",
+  express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
+);
 
-app.listen(process.env.PORT)
+app.listen(process.env.PORT);

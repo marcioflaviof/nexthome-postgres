@@ -10,6 +10,7 @@ const Visit = require("../models/Visit");
 const TypeDetail = require("../models/TypeDetail");
 const Detail = require("../models/Detail");
 const Picture = require("../models/Picture");
+const LocalType = require("../models/LocalType");
 
 var connection = null;
 
@@ -28,6 +29,7 @@ Visit.init(connection);
 TypeDetail.init(connection);
 Detail.init(connection);
 Picture.init(connection);
+LocalType.init(connection);
 
 House.associate(connection.models);
 Available.associate(connection.models);

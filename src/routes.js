@@ -13,6 +13,7 @@ const VisitController = require("./controllers/VisitController");
 const TDetailController = require("./controllers/TDetailController");
 const DetailController = require("./controllers/DetailController");
 const ImageController = require("./controllers/PictureController");
+const LocalTypeController = require("./controllers/LocalTypeController");
 
 const routes = express.Router();
 
@@ -76,5 +77,11 @@ routes.post(
   ImageController.createImage
 );
 routes.delete("/image/:id", ImageController.deleteImage);
+
+//LocalType Routes
+routes.get("/localtype/:id", LocalTypeController.getLocalType);
+routes.post("/register/localtype", LocalTypeController.createLocalType);
+routes.put("/update/localtype/:id", LocalTypeController.updateLocalType);
+routes.delete("/delete/localtype/:id", LocalTypeController.deleteLocalType);
 
 module.exports = routes;

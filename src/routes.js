@@ -14,6 +14,7 @@ const TDetailController = require("./controllers/TDetailController");
 const DetailController = require("./controllers/DetailController");
 const ImageController = require("./controllers/PictureController");
 const LocalTypeController = require("./controllers/LocalTypeController");
+const LocalController = require("./controllers/LocalController");
 
 const routes = express.Router();
 
@@ -83,5 +84,11 @@ routes.get("/localtype/:id", LocalTypeController.getLocalType);
 routes.post("/register/localtype", LocalTypeController.createLocalType);
 routes.put("/update/localtype/:id", LocalTypeController.updateLocalType);
 routes.delete("/delete/localtype/:id", LocalTypeController.deleteLocalType);
+
+//Local Routes
+routes.get("/local/:id", LocalController.getLocal);
+routes.post("/register/local", LocalController.createLocal);
+routes.put("/update/local/:id", LocalController.updateLocal);
+routes.delete("/delete/local/:id", LocalController.deleteLocal);
 
 module.exports = routes;

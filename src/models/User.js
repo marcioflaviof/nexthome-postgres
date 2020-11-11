@@ -31,7 +31,7 @@ class User extends Model {
     static associate(models) {
         this.hasMany(models.ta_picture, {
             foreignKey: "user_id",
-            as: "picture",
+            as: "user_picture",
         });
     }
 }

@@ -5,7 +5,7 @@ module.exports = {
     async getUsers(req, res) {
         const users = await User.findAll({
             where: { is_deleted: false },
-            include: "picture",
+            include: "user_picture",
         });
 
         return res.json(users);
@@ -14,7 +14,7 @@ module.exports = {
     async getUser(req, res) {
         const user = await User.findOne({
             where: { id: req.params.id },
-            include: "picture",
+            include: "user_picture",
         });
 
         if (!user || user.is_deleted == true) {

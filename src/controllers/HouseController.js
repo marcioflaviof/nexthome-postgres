@@ -6,7 +6,7 @@ module.exports = {
     async getHouse(req, res) {
         const house = await House.findOne({
             where: { id: req.params.id },
-            include: "picture",
+            include: ["owner", "house_picture"],
         });
         if (!house || house.is_deleted == true) {
             return res.status(400).json({ err: "House not found" });
@@ -18,8 +18,7 @@ module.exports = {
     async getHouses(req, res) {
         const houses = await House.findAll({
             where: { is_deleted: false },
-            include: "owner",
-            include: "picture",
+            include: ["owner", "house_picture"],
         });
 
         return res.json(houses);

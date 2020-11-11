@@ -29,7 +29,7 @@ class House extends Model {
         });
         this.hasMany(models.ta_picture, {
             foreignKey: "house_id",
-            as: "picture",
+            as: "house_picture",
         });
     }
 }

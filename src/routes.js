@@ -19,7 +19,7 @@ const LocalController = require("./controllers/LocalController");
 const routes = express.Router();
 
 routes.get("/", function (req, res) {
-  res.send("Hello World");
+    res.send("Hello World");
 });
 
 // Login Route
@@ -43,8 +43,8 @@ routes.delete("/delete/house/:id", HouseController.deleteHouse);
 routes.get("/available/:house", AvailableController.getHouseAvailable);
 routes.get("/available/:house/:day", AvailableController.getDayAvailable);
 routes.post(
-  "/register/available/:house_id",
-  AvailableController.createAvailable
+    "/register/available/:house_id",
+    AvailableController.createAvailable
 );
 routes.put("/update/available/:id", AvailableController.updateAvailable);
 routes.delete("/delete/available/:id", AvailableController.deleteAvailable);
@@ -64,8 +64,8 @@ routes.delete("/delete/tdetail/:id", TDetailController.deleteTDetail);
 //Detail Routes
 routes.get("/detail/:id", DetailController.getDetail);
 routes.post(
-  "/register/detail/:house_id/:type_detail_id",
-  DetailController.createDetail
+    "/register/detail/:house_id/:type_detail_id",
+    DetailController.createDetail
 );
 routes.put("/update/detail/:id", DetailController.updateDetail);
 routes.delete("/delete/detail/:id", DetailController.deleteDetail);
@@ -73,9 +73,9 @@ routes.delete("/delete/detail/:id", DetailController.deleteDetail);
 //Image Routes
 routes.get("/images", ImageController.getImage);
 routes.post(
-  "/register/image/:user_id/:house_id",
-  multer(multerConfig).single("file"),
-  ImageController.createImage
+    "/register/image/:user_id/:house_id",
+    multer(multerConfig).single("file"),
+    ImageController.createImage
 );
 routes.delete("/image/:id", ImageController.deleteImage);
 

@@ -15,11 +15,11 @@ const LocalType = require("../models/LocalType");
 var connection = null;
 
 if (!process.env.LOCAL) {
-  var connection = new Sequelize(dbConfig.production);
-  console.log("Connected on prodution");
+    var connection = new Sequelize(dbConfig.production);
+    console.log("Connected on prodution");
 } else {
-  var connection = new Sequelize(dbConfig.development);
-  console.log("Connected on development");
+    var connection = new Sequelize(dbConfig.development);
+    console.log("Connected on development");
 }
 
 User.init(connection);
@@ -31,6 +31,7 @@ Detail.init(connection);
 Picture.init(connection);
 LocalType.init(connection);
 
+User.associate(connection.models);
 House.associate(connection.models);
 Available.associate(connection.models);
 Visit.associate(connection.models);

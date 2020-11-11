@@ -53,8 +53,12 @@ module.exports = {
     async deleteImage(req, res) {
         const picture = await Picture.findByPk(req.params.id);
 
-        picture.update({ is_deleted: true });
+        if (!picture) {
+            return res.status(400).json({ err: "Picture not found" });
+        }
 
-        return res.json(picture);
+        picture.destroy();
+
+        return res.status(200).json({ Deleted: "True" });
     },
 };

@@ -59,6 +59,6 @@ module.exports = {
 
         picture.destroy();
 
-        return res.status(200).json({ Deleted: "True" });
+        return res.status(200).json({ deleted: true });
     },
 };

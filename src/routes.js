@@ -78,7 +78,7 @@ routes.post(
     multer(multerConfig).single("file"),
     ImageController.createImage
 );
-routes.delete("/image/:id", ImageController.deleteImage);
+routes.delete("/delete/image/:id", ImageController.deleteImage);
 
 //LocalType Routes
 routes.get("/localtype/:id", LocalTypeController.getLocalType);

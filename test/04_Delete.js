@@ -1,7 +1,8 @@
+require("dotenv").config();
 var chai = require("chai");
 var chaiHttp = require("chai-http");
 var expect = chai.expect;
-var server = "http://localhost:8080";
+var server = process.env.SERVERTEST;
 chai.should();
 
 chai.use(chaiHttp);

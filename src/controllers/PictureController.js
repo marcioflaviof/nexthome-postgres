@@ -17,6 +17,16 @@ module.exports = {
         const user = await User.findByPk(user_id);
         const house = await House.findByPk(house_id);
 
+        const picture = await Picture.findOne({
+            where: {
+                user_id: user_id,
+            },
+        });
+
+        if (picture) {
+            return res.status(400).json({ err: "Already have an image" });
+        }
+
         if (!user && !house) {
             return res
                 .status(400)

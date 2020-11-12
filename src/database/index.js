@@ -11,6 +11,7 @@ const TypeDetail = require("../models/TypeDetail");
 const Detail = require("../models/Detail");
 const Picture = require("../models/Picture");
 const LocalType = require("../models/LocalType");
+const Local = require("../models/Local");
 
 var connection = null;
 
@@ -30,6 +31,7 @@ TypeDetail.init(connection);
 Detail.init(connection);
 Picture.init(connection);
 LocalType.init(connection);
+Local.init(connection);
 
 User.associate(connection.models);
 House.associate(connection.models);
@@ -38,5 +40,6 @@ Visit.associate(connection.models);
 TypeDetail.associate(connection.models);
 Detail.associate(connection.models);
 Picture.associate(connection.models);
+Local.associate(connection.models);
 
 module.exports = connection;

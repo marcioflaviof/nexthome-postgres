@@ -31,6 +31,10 @@ class House extends Model {
             foreignKey: "house_id",
             as: "house_picture",
         });
+        this.hasMany(models.ta_detail, {
+            foreignKey: "house_id",
+            as: "house_detail",
+        });
     }
 }
 

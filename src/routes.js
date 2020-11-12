@@ -41,6 +41,7 @@ routes.delete("/delete/house/:id", HouseController.deleteHouse);
 
 //Available Routes
 routes.get("/available/:house", AvailableController.getHouseAvailable);
+routes.get("/available/hours/:house_id/:day", AvailableController.getHours);
 routes.get("/available/:house/:day", AvailableController.getDayAvailable);
 routes.post(
     "/register/available/:house_id",

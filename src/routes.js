@@ -46,6 +46,7 @@ routes.get(
     "/available/days/:house_id/:day/:range",
     AvailableController.getDates
 );
+routes.get("/available/:house_id/next", AvailableController.getNext);
 routes.get("/available/:house/:day", AvailableController.getDayAvailable);
 routes.post(
     "/register/available/:house_id",

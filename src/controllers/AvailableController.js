@@ -122,12 +122,40 @@ module.exports = {
                     days.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
                 }
             } catch (err) {
-                console.log("[ERROR] " + err);
+                return res.status(400).json({ err: err });
             }
             now.setDate(now.getDate() + 1);
         }
 
         return res.json({ dias: days });
+    },
+
+    async getNext(req, res) {
+        const { house_id } = req.params;
+
+        let now = new Date();
+        now.setDate(now.getDate() + 1);
+
+        try {
+            for (let index = 0; index < 30; index++) {
+                var available = await Available.findOne({
+                    where: {
+                        house_id: house_id,
+                        day_week: now.getDay(),
+                        is_deleted: "false",
+                    },
+                });
+
+                if (available) {
+                    return res.json(available);
+                }
+                now.setDate(now.getDate() + 1);
+            }
+        } catch (err) {
+            return res.status(400).json({ err: err });
+        }
+
+        return res.status(400).json({ err: "Não há horários disponíveis" });
     },
 
     async updateAvailable(req, res) {

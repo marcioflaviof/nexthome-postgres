@@ -66,7 +66,7 @@ module.exports = {
         });
         return res.json(availables);
     },
-    //Victor
+
     async getHours(req, res) {
         const { house_id, day } = req.params;
 
@@ -92,7 +92,7 @@ module.exports = {
 
         return res.json({ horas: hours });
     },
-    //Victor
+
     async getDates(req, res) {
         const { house_id, day, range } = req.params;
         let now = new Date(day);

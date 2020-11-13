@@ -122,7 +122,7 @@ module.exports = {
                     days.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
                 }
             } catch (err) {
-                return res.status(400).json({ err: err });
+                return res.status(400).json({ err: "[ERROR] " + err });
             }
             now.setDate(now.getDate() + 1);
         }

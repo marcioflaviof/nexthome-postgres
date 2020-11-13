@@ -1,6 +1,7 @@
 const House = require("../models/House");
 const Available = require("../models/Available");
 const bcrypt = require("bcryptjs");
+const date = require("date-and-time");
 
 module.exports = {
     async createAvailable(req, res) {
@@ -65,31 +66,68 @@ module.exports = {
         });
         return res.json(availables);
     },
-
+    //Victor
     async getHours(req, res) {
         const { house_id, day } = req.params;
 
-        const date = new Date(day);
-
         let hours = [];
+        let now = new Date(day);
+        now.setDate(now.getDate() + 1);
 
         const available = await Available.findOne({
             where: {
                 house_id: house_id,
-                day_week: date.getDay(),
+                day_week: now.getDay(),
                 is_deleted: "false",
             },
         });
-
         for (
             let index = available.initial_hour;
             index < available.final_hour;
             index++
         ) {
-            hours.push(index);
+            now.setHours(index);
+            hours.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
         }
 
         return res.json({ horas: hours });
+    },
+    //Victor
+    async getDates(req, res) {
+        const { house_id, day, range } = req.params;
+        let now = new Date(day);
+        now.setDate(now.getDate() + 1);
+
+        if (range >= 31) {
+            return res.status(400).json({ err: "No máximo 1 mês" });
+        }
+
+        let days = [];
+
+        for (let index = 0; index < range; index++) {
+            var available = await Available.findOne({
+                where: {
+                    house_id: house_id,
+                    day_week: now.getDay(),
+                    is_deleted: "false",
+                },
+            });
+            try {
+                for (
+                    let index = available.initial_hour;
+                    index < available.final_hour;
+                    index++
+                ) {
+                    now.setHours(index);
+                    days.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+                }
+            } catch (err) {
+                console.log("[ERROR] " + err);
+            }
+            now.setDate(now.getDate() + 1);
+        }
+
+        return res.json({ dias: days });
     },
 
     async updateAvailable(req, res) {

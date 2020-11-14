@@ -15,6 +15,7 @@ const DetailController = require("./controllers/DetailController");
 const ImageController = require("./controllers/PictureController");
 const LocalTypeController = require("./controllers/LocalTypeController");
 const LocalController = require("./controllers/LocalController");
+const FeedbackController = require("./controllers/FeedBackController");
 
 const routes = express.Router();
 
@@ -95,5 +96,11 @@ routes.get("/local/:id", LocalController.getLocal);
 routes.post("/register/local", LocalController.createLocal);
 routes.put("/update/local/:id", LocalController.updateLocal);
 routes.delete("/delete/local/:id", LocalController.deleteLocal);
+
+//FeedBack Routes
+routes.get("/feedback/:user_id/:house_id", FeedbackController.getFeedback);
+routes.post("/feedback/:user_id/:house_id", FeedbackController.createFeeedback);
+routes.put("/feedback/:user_id/:house_id", FeedbackController.updateFedback);
+routes.delete("/feedback/:id", FeedbackController.deleteFeedback);
 
 module.exports = routes;

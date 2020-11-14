@@ -54,7 +54,8 @@ routes.put("/update/available/:id", AvailableController.updateAvailable);
 routes.delete("/delete/available/:id", AvailableController.deleteAvailable);
 
 //Visit Routes
-routes.get("/visit/:id/", VisitController.getVisit);
+routes.get("/visit/:id", VisitController.getVisit);
+routes.get("/visit/user/:user_id", VisitController.getVisitByUser);
 routes.post("/register/visit/:house_id/:user_id", VisitController.createVisit);
 routes.put("/update/visit/:id", VisitController.updateVisit);
 routes.delete("/delete/visit/:id", VisitController.deleteVisit);

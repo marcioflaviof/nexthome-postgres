@@ -14,6 +14,22 @@ module.exports = {
         return res.json(visit);
     },
 
+    async getVisitByUser(req, res) {
+        const { user_id } = req.params;
+
+        const visit = await Visit.findAll({
+            where: {
+                user_id: user_id,
+            },
+        });
+
+        if (!visit) {
+            return res.status(400).json({ err: "Visit not found" });
+        }
+
+        return res.json(visit);
+    },
+
     async createVisit(req, res) {
         const { day_hour_visit, is_confirmed } = req.body;
         const { house_id, user_id } = req.params;

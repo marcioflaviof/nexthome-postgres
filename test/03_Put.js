@@ -74,7 +74,7 @@ describe("PUT TESTS", () => {
             description: "Sem descrições",
             number_bedroom: 3,
             number_bath: 2,
-            to_sell: "1",
+            to_sell: true,
         };
 
         chai.request(server)

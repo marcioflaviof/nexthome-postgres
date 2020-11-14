@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const House = require("../models/House");
+const Available = require("../models/Available");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
@@ -24,6 +25,19 @@ module.exports = {
         return res.json(houses);
     },
 
+    async getUserHouses(req, res) {
+        const { user_id } = req.params;
+        const houses = await House.findAll({
+            where: {
+                user_id: user_id,
+            },
+        });
+
+        if (!houses) return res.status(400).json({ err: "House not found" });
+
+        return res.json(houses);
+    },
+
     async createHouse(req, res) {
         const { user_id } = req.params;
         const {
@@ -35,13 +49,17 @@ module.exports = {
             number_bath,
             local,
             to_sell,
+            initial_hour,
+            final_hour,
+            day_week,
         } = req.body;
         const user = await User.findByPk(user_id);
         if (!user || user.is_deleted == true) {
             return res.status(400).json({ err: "User not found" });
         }
 
-        let house;
+        let house = new House();
+        let available;
 
         try {
             house = await House.create({
@@ -59,7 +77,20 @@ module.exports = {
             return res.status(400).json({ err: error.message });
         }
 
-        return res.json(house);
+        const house_id = house.id;
+
+        try {
+            available = await Available.create({
+                house_id,
+                initial_hour,
+                final_hour,
+                day_week,
+            });
+        } catch (err) {
+            return res.status(400).json({ err: err.message });
+        }
+
+        return res.json({ house: house, available: available });
     },
 
     async updateHouse(req, res) {

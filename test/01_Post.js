@@ -59,7 +59,10 @@ describe("POST TESTS", async () => {
             description: "Sem descricoes",
             number_bedroom: 3,
             number_bath: 2,
-            to_sell: "1",
+            to_sell: true,
+            initial_hour: 8,
+            final_hour: 13,
+            day_week: 3,
         };
 
         chai.request(server)

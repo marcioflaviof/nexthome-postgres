@@ -35,6 +35,7 @@ routes.delete("/delete/user/:id", UserController.deleteUser);
 //House Routes
 routes.get("/house/:id", HouseController.getHouse);
 routes.get("/houses", HouseController.getHouses);
+routes.get("/houses/user/:user_id", HouseController.getUserHouses);
 routes.post("/register/house/:user_id", HouseController.createHouse);
 routes.put("/update/house/:id", HouseController.updateHouse);
 routes.delete("/delete/house/:id", HouseController.deleteHouse);
@@ -42,10 +43,7 @@ routes.delete("/delete/house/:id", HouseController.deleteHouse);
 //Available Routes
 routes.get("/available/:house", AvailableController.getHouseAvailable);
 routes.get("/available/hours/:house_id/:day", AvailableController.getHours);
-routes.get(
-    "/available/days/:house_id/:day/:range",
-    AvailableController.getDates
-);
+routes.get("/available/days/:house_id/:range", AvailableController.getDates);
 routes.get("/available/:house_id/next", AvailableController.getNext);
 routes.get("/available/:house/:day", AvailableController.getDayAvailable);
 routes.post(

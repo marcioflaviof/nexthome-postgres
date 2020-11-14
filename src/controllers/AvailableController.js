@@ -94,8 +94,8 @@ module.exports = {
     },
 
     async getDates(req, res) {
-        const { house_id, day, range } = req.params;
-        let now = new Date(day);
+        const { house_id, range } = req.params;
+        let now = new Date();
         now.setDate(now.getDate() + 1);
 
         if (range >= 31) {

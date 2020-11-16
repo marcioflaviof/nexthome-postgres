@@ -1,5 +1,7 @@
 const House = require("../models/House");
 const Available = require("../models/Available");
+const Visit = require("../models/Visit");
+
 const bcrypt = require("bcryptjs");
 const date = require("date-and-time");
 
@@ -211,4 +213,30 @@ module.exports = {
 
         return res.json(available);
     },
+
+    // async getAvailableTimes(req, res) {
+    //     const { house_id } = req.params;
+
+    //     console.log("chegou aqui");
+
+    //     const visits = await Visit.findAll({
+    //         where: { house_id: house_id, is_deleted: false },
+    //     });
+
+    //     console.log(visits);
+
+    //     const availables = await House.findAll({
+    //         where: { id: house_id, is_deleted: false },
+    //         attributes: ["id", "address", "description"],
+    //         include: {
+    //             association: "availables",
+    //             attributes: ["initial_hour", "final_hour", "day_week"],
+    //             where: { is_deleted: "false" },
+    //         },
+    //         order: [["availables", "day_week", "ASC"]],
+    //     });
+
+    //     console.log(availables.availables);
+    //     return res.json(availables);
+    // },
 };

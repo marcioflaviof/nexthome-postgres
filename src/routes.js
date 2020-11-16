@@ -15,6 +15,7 @@ const DetailController = require("./controllers/DetailController");
 const ImageController = require("./controllers/PictureController");
 const LocalTypeController = require("./controllers/LocalTypeController");
 const LocalController = require("./controllers/LocalController");
+const FeedbackController = require("./controllers/FeedBackController");
 
 const routes = express.Router();
 
@@ -33,8 +34,10 @@ routes.put("/update/user/:id", UserController.updateUser);
 routes.delete("/delete/user/:id", UserController.deleteUser);
 
 //House Routes
+
 routes.get("/house/:id", HouseController.getHouse);
 routes.get("/houses", HouseController.getHouses);
+routes.get("/houses/user/:user_id", HouseController.getUserHouses);
 routes.post("/register/house/:user_id", HouseController.createHouse);
 routes.put("/update/house/:id", HouseController.updateHouse);
 routes.delete("/delete/house/:id", HouseController.deleteHouse);
@@ -42,11 +45,9 @@ routes.delete("/delete/house/:id", HouseController.deleteHouse);
 //Available Routes
 routes.get("/available/:house", AvailableController.getHouseAvailable);
 routes.get("/available/hours/:house_id/:day", AvailableController.getHours);
-routes.get(
-    "/available/days/:house_id/:day/:range",
-    AvailableController.getDates
-);
+routes.get("/available/days/:house_id/:range", AvailableController.getDates);
 routes.get("/available/:house_id/next", AvailableController.getNext);
+// routes.get("/available/times/:house_id", AvailableController.getAvailableTimes);
 routes.get("/available/:house/:day", AvailableController.getDayAvailable);
 routes.post(
     "/register/available/:house_id",
@@ -56,7 +57,8 @@ routes.put("/update/available/:id", AvailableController.updateAvailable);
 routes.delete("/delete/available/:id", AvailableController.deleteAvailable);
 
 //Visit Routes
-routes.get("/visit/:id/", VisitController.getVisit);
+routes.get("/visit/:id", VisitController.getVisit);
+routes.get("/visit/user/:user_id", VisitController.getVisitByUser);
 routes.post("/register/visit/:house_id/:user_id", VisitController.createVisit);
 routes.put("/update/visit/:id", VisitController.updateVisit);
 routes.delete("/delete/visit/:id", VisitController.deleteVisit);
@@ -96,5 +98,11 @@ routes.get("/local/:id", LocalController.getLocal);
 routes.post("/register/local", LocalController.createLocal);
 routes.put("/update/local/:id", LocalController.updateLocal);
 routes.delete("/delete/local/:id", LocalController.deleteLocal);
+
+//FeedBack Routes
+routes.get("/feedback/:user_id/:house_id", FeedbackController.getFeedback);
+routes.post("/feedback/:user_id/:house_id", FeedbackController.createFeeedback);
+routes.put("/feedback/:user_id/:house_id", FeedbackController.updateFedback);
+routes.delete("/feedback/:id", FeedbackController.deleteFeedback);
 
 module.exports = routes;

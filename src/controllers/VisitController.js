@@ -21,6 +21,7 @@ module.exports = {
             where: {
                 user_id: user_id,
             },
+            include: ["user"],
         });
 
         if (!visit) {

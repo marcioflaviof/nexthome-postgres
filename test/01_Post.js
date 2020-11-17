@@ -60,8 +60,8 @@ describe("POST TESTS", async () => {
             number_bedroom: 3,
             number_bath: 2,
             to_sell: true,
-            initial_hour: 8,
-            final_hour: 13,
+            initial_hour: "8",
+            final_hour: "13",
             day_week: 3,
         };
 
@@ -71,18 +71,17 @@ describe("POST TESTS", async () => {
             .end((err, res) => {
                 expect(res.statusCode).to.equal(200);
 
-                res.body.id.should.be.a("number");
-                res.body.user_id.should.be.a("number");
-                res.body.land_size.should.be.a("string");
-                res.body.price.should.be.a("number");
-                res.body.address.should.be.a("string");
-                res.body.description.should.be.a("string");
-                res.body.number_bedroom.should.be.a("number");
-                res.body.number_bath.should.be.a("number");
-                res.body.is_deleted.should.be.false;
+                res.body.house.id.should.be.a("number");
+                res.body.house.user_id.should.be.a("number");
+                res.body.house.land_size.should.be.a("string");
+                res.body.house.price.should.be.a("number");
+                res.body.house.address.should.be.a("string");
+                res.body.house.description.should.be.a("string");
+                res.body.house.number_bedroom.should.be.a("number");
+                res.body.house.number_bath.should.be.a("number");
                 res.body.should.be.a("object");
 
-                houseId = res.body.id;
+                houseId = res.body.house.id;
 
                 done();
             });

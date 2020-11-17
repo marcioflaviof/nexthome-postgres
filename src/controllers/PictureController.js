@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const House = require("../models/House");
 const Picture = require("../models/Picture");
+const { where } = require("sequelize");
 
 module.exports = {
     async getImage(req, res) {
@@ -14,8 +15,12 @@ module.exports = {
 
         const { user_id, house_id } = req.params;
 
-        const user = await User.findByPk(user_id);
-        const house = await House.findByPk(house_id);
+        const user = await User.findOne({
+            where: { id: user_id, is_deleted: false },
+        });
+        const house = await House.findOne({
+            where: { id: house_id, is_deleted: false },
+        });
 
         const picture = await Picture.findOne({
             where: {

@@ -33,6 +33,11 @@ class User extends Model {
             foreignKey: "user_id",
             as: "user_picture",
         });
+
+        this.hasMany(models.tb_house, {
+            foreignKey: "user_id",
+            as: "user_house",
+        });
     }
 }
 

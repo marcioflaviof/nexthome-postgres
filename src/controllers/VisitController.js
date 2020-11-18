@@ -2,6 +2,7 @@ const House = require("../models/House");
 const User = require("../models/User");
 const Visit = require("../models/Visit");
 const bcrypt = require("bcryptjs");
+const { where } = require("sequelize");
 
 module.exports = {
     async getVisit(req, res) {
@@ -17,19 +18,52 @@ module.exports = {
     async getVisitByUser(req, res) {
         const { user_id } = req.params;
 
-        const visit = await Visit.findAll({
-            where: {
-                user_id: user_id,
-            },
-            include: ["house"],
-            order: ["day_hour_visit"],
-        });
+        let visit;
+
+        try {
+            visit = await Visit.findAll({
+                where: {
+                    user_id: user_id,
+                },
+                include: ["house"],
+                order: ["day_hour_visit"],
+            });
+        } catch (err) {
+            return res.status(400).json({ err: err });
+        }
 
         if (!visit) {
             return res.status(400).json({ err: "Visit not found" });
         }
 
         return res.json(visit);
+    },
+
+    async getVisitBySeller(req, res) {
+        const { user_id } = req.params;
+
+        let user;
+        let house;
+
+        try {
+            user = await User.findOne({
+                where: {
+                    id: user_id,
+                },
+                include: ["user_house"],
+            });
+
+            house = await House.findOne({
+                where: {
+                    id: user.user_house[0].id,
+                },
+                include: ["house_visit"],
+            });
+        } catch (err) {
+            return res.status(400).json({ err: err });
+        }
+
+        return res.json({ user: user, house: house });
     },
 
     async createVisit(req, res) {

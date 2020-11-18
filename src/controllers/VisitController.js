@@ -22,6 +22,7 @@ module.exports = {
                 user_id: user_id,
             },
             include: ["house"],
+            order: ["day_hour_visit"],
         });
 
         if (!visit) {

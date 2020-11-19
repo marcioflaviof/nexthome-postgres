@@ -13,7 +13,7 @@ module.exports = {
             hosue_id: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
-                references: { model: "tb_local", key: "id" },
+                references: { model: "tb_house", key: "id" },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },
@@ -21,7 +21,7 @@ module.exports = {
             user_id: {
                 type: Sequelize.INTEGER,
                 allowNull: true,
-                references: { model: "td_local_type", key: "id" },
+                references: { model: "tb_user", key: "id" },
                 onUpdate: "CASCADE",
                 onDelete: "CASCADE",
             },

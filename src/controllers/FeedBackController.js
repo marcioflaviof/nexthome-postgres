@@ -11,9 +11,15 @@ module.exports = {
                 .status(400)
                 .json({ err: "Must choose one user or house" });
         } else if (user_id != 0) {
-            feedback = await Feedback.findByPk(user_id);
+            feedback = await Feedback.findOne({
+                where: user_id,
+                include: "user",
+            });
         } else if (house_id != 0) {
-            feedback = await Feedback.findByPk(house_id);
+            feedback = await Feedback.findOne({
+                where: house_id,
+                include: "house",
+            });
         }
 
         if (!feedback || feedback.is_deleted) {
@@ -47,14 +53,22 @@ module.exports = {
         const id = req.params.id;
         const { score, description } = req.body;
 
-        const feedback = await Feedback.findOne({
-            where: { id: id },
-            include: "user",
-            include: "house",
-        });
+        let feedback;
 
-        if (!feedback || feedback.is_deleted) {
-            return res.status(400).json({ err: "Feedback not found" });
+        if (user_id != 0 && house_id != 0) {
+            return res
+                .status(400)
+                .json({ err: "Must choose one user or house" });
+        } else if (user_id != 0) {
+            feedback = await Feedback.findOne({
+                where: user_id,
+                include: "user",
+            });
+        } else if (house_id != 0) {
+            feedback = await Feedback.findOne({
+                where: house_id,
+                include: "house",
+            });
         }
 
         feedback.update({ score, description });

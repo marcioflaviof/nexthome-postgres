@@ -42,28 +42,29 @@ module.exports = {
     async getVisitBySeller(req, res) {
         const { user_id } = req.params;
 
-        let user;
-        let house;
+        let houses;
+        let visits = [];
+        let visit;
 
         try {
-            user = await User.findOne({
+            houses = await House.findAll({
                 where: {
-                    id: user_id,
+                    user_id: user_id,
                 },
-                include: ["user_house"],
             });
 
-            house = await House.findOne({
+            visits = await House.findAll({
                 where: {
-                    id: user.user_house[0].id,
+                    user_id: user_id,
                 },
                 include: ["house_visit"],
+                attributes: ["id"],
             });
         } catch (err) {
             return res.status(400).json({ err: err });
         }
 
-        return res.json({ user: user, house: house });
+        return res.json({ house: houses, visit: visits });
     },
 
     async createVisit(req, res) {

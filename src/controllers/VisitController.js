@@ -25,7 +25,7 @@ module.exports = {
                 where: {
                     user_id: user_id,
                 },
-                include: ["house"],
+                include: ["house", "user"],
                 order: ["day_hour_visit"],
             });
         } catch (err) {

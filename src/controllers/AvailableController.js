@@ -93,8 +93,6 @@ module.exports = {
             hourVisit.push(visit.day_hour_visit.getHours());
         });
 
-        console.log(hourVisit);
-
         const available = await Available.findOne({
             where: {
                 house_id: house_id,
@@ -128,6 +126,25 @@ module.exports = {
         let days = [];
 
         for (let index = 0; index < range; index++) {
+            let hourVisit = [];
+
+            let visits = await Visit.findAll({
+                where: {
+                    house_id: house_id,
+                    day_hour_visit: {
+                        [Op.between]: [now.setHours(0), now.setHours(23)],
+                    },
+                    is_confirmed: true,
+                },
+                attributes: ["day_hour_visit"],
+            });
+
+            visits.forEach((visit) => {
+                hourVisit.push(visit.day_hour_visit.getHours());
+            });
+
+            console.log(hourVisit);
+
             var available = await Available.findOne({
                 where: {
                     house_id: house_id,
@@ -141,8 +158,10 @@ module.exports = {
                     index < available.final_hour;
                     index++
                 ) {
-                    now.setHours(index);
-                    days.push(date.format(now, "YYYY/MM/DD HH"));
+                    if (!hourVisit.includes(index)) {
+                        now.setHours(index);
+                        days.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+                    }
                 }
             } catch {}
             now.setDate(now.getDate() + 1);

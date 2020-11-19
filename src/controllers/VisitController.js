@@ -57,7 +57,14 @@ module.exports = {
                 where: {
                     user_id: user_id,
                 },
-                include: ["house_visit"],
+                include: {
+                    association: "house_visit",
+                    include: {
+                        association: "user",
+                        attributes: ["id", "name", "email", "cellphone"],
+                    },
+                    attributes: ["day_hour_visit", "is_confirmed", "house_id"],
+                },
                 attributes: ["id"],
             });
         } catch (err) {
@@ -68,8 +75,10 @@ module.exports = {
     },
 
     async createVisit(req, res) {
-        const { day_hour_visit, is_confirmed } = req.body;
+        const { day_hour_visit } = req.body;
         const { house_id, user_id } = req.params;
+
+        let is_confirmed = false;
 
         const house = await House.findByPk(house_id);
         const user = await User.findByPk(user_id);

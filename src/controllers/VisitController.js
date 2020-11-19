@@ -42,17 +42,9 @@ module.exports = {
     async getVisitBySeller(req, res) {
         const { user_id } = req.params;
 
-        let houses;
         let visits = [];
-        let visit;
 
         try {
-            houses = await House.findAll({
-                where: {
-                    user_id: user_id,
-                },
-            });
-
             visits = await House.findAll({
                 where: {
                     user_id: user_id,
@@ -65,13 +57,12 @@ module.exports = {
                     },
                     attributes: ["day_hour_visit", "is_confirmed", "house_id"],
                 },
-                attributes: ["id"],
             });
         } catch (err) {
             return res.status(400).json({ err: err });
         }
 
-        return res.json({ house: houses, visit: visits });
+        return res.json({ houses: visits });
     },
 
     async createVisit(req, res) {
@@ -107,9 +98,10 @@ module.exports = {
         return res.json(visit);
     },
 
-    async updateVisit(req, res) {
-        const { password, day_hour_visit, is_confirmed } = req.body;
+    async updateVisitConfirmed(req, res) {
         const { id } = req.params;
+
+        let is_confirmed = true;
 
         const visit = await Visit.findOne({
             where: {
@@ -125,8 +117,28 @@ module.exports = {
             return res.status(400).json({ err: "Appointment not found" });
         }
 
-        if (!bcrypt.compareSync(password, visit.house.owner.password)) {
-            return res.status(400).json({ err: "Wrong password" });
+        visit.update({ is_confirmed });
+        return res.json(visit);
+    },
+
+    async updateVisitHour(req, res) {
+        const { day_hour_visit } = req.body;
+        const { id } = req.params;
+
+        let is_confirmed = false;
+
+        const visit = await Visit.findOne({
+            where: {
+                id: id,
+            },
+            include: {
+                association: "house",
+                include: { association: "owner" },
+            },
+        });
+
+        if (!visit || visit.is_deleted == true) {
+            return res.status(400).json({ err: "Appointment not found" });
         }
 
         visit.update({ day_hour_visit, is_confirmed });

@@ -59,7 +59,8 @@ routes.get("/visit/:id", VisitController.getVisit);
 routes.get("/visit/user/:user_id", VisitController.getVisitByUser);
 routes.get("/visit/seller/:user_id", VisitController.getVisitBySeller);
 routes.post("/register/visit/:house_id/:user_id", VisitController.createVisit);
-routes.put("/update/visit/:id", VisitController.updateVisit);
+routes.put("/update/visit/:id/confirm", VisitController.updateVisitConfirmed);
+routes.put("/update/visit/:id", VisitController.updateVisitHour);
 routes.delete("/delete/visit/:id", VisitController.deleteVisit);
 
 //TypeDetail Routes

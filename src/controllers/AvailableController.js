@@ -1,6 +1,7 @@
 const House = require("../models/House");
 const Available = require("../models/Available");
 const Visit = require("../models/Visit");
+const { Op } = require("sequelize");
 
 const bcrypt = require("bcryptjs");
 const date = require("date-and-time");
@@ -75,6 +76,24 @@ module.exports = {
         let hours = [];
         let now = new Date(day);
         now.setDate(now.getDate() + 1);
+        let hourVisit = [];
+
+        let visits = await Visit.findAll({
+            where: {
+                house_id: house_id,
+                day_hour_visit: {
+                    [Op.between]: [now.setHours(0), now.setHours(23)],
+                },
+                is_confirmed: true,
+            },
+            attributes: ["day_hour_visit"],
+        });
+
+        visits.forEach((visit) => {
+            hourVisit.push(visit.day_hour_visit.getHours());
+        });
+
+        console.log(hourVisit);
 
         const available = await Available.findOne({
             where: {
@@ -88,8 +107,10 @@ module.exports = {
             index < available.final_hour;
             index++
         ) {
-            now.setHours(index);
-            hours.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+            if (!hourVisit.includes(index)) {
+                now.setHours(index);
+                hours.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+            }
         }
 
         return res.json({ horas: hours });
@@ -121,7 +142,7 @@ module.exports = {
                     index++
                 ) {
                     now.setHours(index);
-                    days.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+                    days.push(date.format(now, "YYYY/MM/DD HH"));
                 }
             } catch {}
             now.setDate(now.getDate() + 1);

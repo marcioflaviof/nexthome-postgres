@@ -24,6 +24,7 @@ module.exports = {
             visit = await Visit.findAll({
                 where: {
                     user_id: user_id,
+                    is_deleted: false,
                 },
                 include: ["house", "user"],
                 order: ["day_hour_visit"],
@@ -48,6 +49,7 @@ module.exports = {
             visits = await House.findAll({
                 where: {
                     user_id: user_id,
+                    is_deleted: false,
                 },
                 include: {
                     association: "house_visit",
@@ -106,6 +108,7 @@ module.exports = {
         const visit = await Visit.findOne({
             where: {
                 id: id,
+                is_deleted: false,
             },
             include: {
                 association: "house",
@@ -113,7 +116,7 @@ module.exports = {
             },
         });
 
-        if (!visit || visit.is_deleted == true) {
+        if (!visit) {
             return res.status(400).json({ err: "Appointment not found" });
         }
 
@@ -130,6 +133,7 @@ module.exports = {
         const visit = await Visit.findOne({
             where: {
                 id: id,
+                is_deleted: false,
             },
             include: {
                 association: "house",
@@ -152,6 +156,7 @@ module.exports = {
         const visit = await Visit.findOne({
             where: {
                 id: id,
+                is_deleted: false,
             },
             include: {
                 association: "house",
@@ -159,7 +164,7 @@ module.exports = {
             },
         });
 
-        if (!visit || visit.is_deleted == true) {
+        if (!visit) {
             return res.status(400).json({ err: "Appointment not found" });
         }
 

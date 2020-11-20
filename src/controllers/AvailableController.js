@@ -85,6 +85,7 @@ module.exports = {
                     [Op.between]: [now.setHours(0), now.setHours(23)],
                 },
                 is_confirmed: true,
+                is_deleted: false,
             },
             attributes: ["day_hour_visit"],
         });
@@ -97,7 +98,7 @@ module.exports = {
             where: {
                 house_id: house_id,
                 day_week: now.getDay(),
-                is_deleted: "false",
+                is_deleted: false,
             },
         });
         for (
@@ -135,6 +136,7 @@ module.exports = {
                         [Op.between]: [now.setHours(0), now.setHours(23)],
                     },
                     is_confirmed: true,
+                    is_deleted: false,
                 },
                 attributes: ["day_hour_visit"],
             });
@@ -182,7 +184,7 @@ module.exports = {
                     where: {
                         house_id: house_id,
                         day_week: now.getDay(),
-                        is_deleted: "false",
+                        is_deleted: false,
                     },
                 });
 
@@ -205,6 +207,7 @@ module.exports = {
             where: {
                 id: id,
                 day_week: day_week,
+                is_deleted: false,
             },
             include: {
                 association: "house",
@@ -231,7 +234,7 @@ module.exports = {
         const { password } = req.body;
 
         const available = await Available.findOne({
-            where: { id: id },
+            where: { id: id, is_deleted: false },
             include: {
                 association: "house",
                 include: { association: "owner" },

@@ -13,11 +13,11 @@ module.exports = {
 
     async getUser(req, res) {
         const user = await User.findOne({
-            where: { id: req.params.id },
+            where: { id: req.params.id, is_deleted: false },
             include: "user_picture",
         });
 
-        if (!user || user.is_deleted == true) {
+        if (!user) {
             return res.status(400).json({ err: "User not found" });
         }
 

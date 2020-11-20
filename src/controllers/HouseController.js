@@ -30,6 +30,7 @@ module.exports = {
         const houses = await House.findAll({
             where: {
                 user_id: user_id,
+                is_deleted: false,
             },
         });
 
@@ -110,6 +111,7 @@ module.exports = {
         const house = await House.findOne({
             where: { id: id },
             include: "owner",
+            is_deleted: false,
         });
 
         if (!house || house.is_deleted == true) {
@@ -142,6 +144,7 @@ module.exports = {
         const house = await House.findOne({
             where: { id: id },
             include: "owner",
+            is_deleted: false,
         });
 
         if (!house || house.is_deleted == true) {

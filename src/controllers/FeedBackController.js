@@ -13,11 +13,13 @@ module.exports = {
         } else if (user_id != 0) {
             feedback = await Feedback.findOne({
                 where: user_id,
+                is_deleted: false,
                 include: "user",
             });
         } else if (house_id != 0) {
             feedback = await Feedback.findOne({
                 where: house_id,
+                is_deleted: false,
                 include: "house",
             });
         }
@@ -63,11 +65,13 @@ module.exports = {
             feedback = await Feedback.findOne({
                 where: user_id,
                 include: "user",
+                is_deleted: false,
             });
         } else if (house_id != 0) {
             feedback = await Feedback.findOne({
                 where: house_id,
                 include: "house",
+                is_deleted: false,
             });
         }
 

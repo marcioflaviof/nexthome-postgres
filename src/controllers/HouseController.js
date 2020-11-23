@@ -49,11 +49,11 @@ module.exports = {
             array_and.push({to_sell: to})
         }
         
-        if(bed){
+        if(bed>=1){
             array_and.push({number_bedroom: bed})
         }
 
-        if(bath){
+        if(bath>=1){
             array_and.push({number_bath: bath})
         }
 

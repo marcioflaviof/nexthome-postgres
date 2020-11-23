@@ -2,6 +2,8 @@ const User = require("../models/User");
 const House = require("../models/House");
 const Available = require("../models/Available");
 const bcrypt = require("bcryptjs");
+const { Op } = require("sequelize");
+const { max } = require("../models/House");
 
 module.exports = {
     async getHouse(req, res) {
@@ -33,6 +35,41 @@ module.exports = {
                 is_deleted: false,
             },
         });
+
+        if (!houses) return res.status(400).json({ err: "House not found" });
+
+        return res.json(houses);
+    },
+
+    async getHousesFilter(req,res) {
+        let {to,min_price,max_price,bed,bath} = req.body
+        let array_and = [{is_deleted: false}];
+
+        if(to!=null){
+            array_and.push({to_sell: to})
+        }
+        
+        if(bed){
+            array_and.push({number_bedroom: bed})
+        }
+
+        if(bath){
+            array_and.push({number_bath: bath})
+        }
+
+        if(!min_price||min_price<0){
+            min_price = 0
+        }
+
+        if(!max_price||max_price<0){
+            max_price = 9999999999999999
+        }
+
+        array_and.push({price:{[Op.between]:[min_price,max_price]}})
+
+        const houses = await House.findAll({
+            where: {[Op.and]: array_and} 
+        })
 
         if (!houses) return res.status(400).json({ err: "House not found" });
 
@@ -74,21 +111,17 @@ module.exports = {
                 local,
                 to_sell,
             });
-        } catch (error) {
-            return res.status(400).json({ err: error.message });
-        }
 
-        const house_id = house.id;
+            const house_id = house.id;
 
-        try {
             available = await Available.create({
                 house_id,
                 initial_hour,
                 final_hour,
                 day_week,
             });
-        } catch (err) {
-            return res.status(400).json({ err: err.message });
+        } catch (error) {
+            return res.status(400).json({ err: error.message });
         }
 
         return res.json({ house: house, available: available });

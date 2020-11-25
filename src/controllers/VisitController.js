@@ -57,7 +57,12 @@ module.exports = {
                         association: "user",
                         attributes: ["id", "name", "email", "cellphone"],
                     },
-                    attributes: ["day_hour_visit", "is_confirmed", "house_id"],
+                    attributes: [
+                        "id",
+                        "day_hour_visit",
+                        "is_confirmed",
+                        "house_id",
+                    ],
                 },
             });
         } catch (err) {
@@ -150,7 +155,6 @@ module.exports = {
     },
 
     async deleteVisit(req, res) {
-        const { password } = req.body;
         const { id } = req.params;
 
         const visit = await Visit.findOne({

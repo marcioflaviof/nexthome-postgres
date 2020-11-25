@@ -1,4 +1,5 @@
 const express = require("express");
+const { body } = require("express-validator");
 
 //IMAGE TEST
 const multer = require("multer");
@@ -29,7 +30,15 @@ routes.post("/login", LoginController.login);
 // User Routes
 routes.get("/users", UserController.getUsers);
 routes.get("/user/:id", UserController.getUser);
-routes.post("/register/user", UserController.createUser);
+routes.post(
+    "/register/user",
+    [
+        body("password").isLength({ min: 5 }),
+        body("email").isEmail(),
+        body("name").notEmpty(),
+    ],
+    UserController.createUser
+);
 routes.put("/update/user/:id", UserController.updateUser);
 routes.delete("/delete/user/:id", UserController.deleteUser);
 

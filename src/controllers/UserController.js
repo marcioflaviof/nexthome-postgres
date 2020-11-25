@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const { validationResult } = require("express-validator");
 
 module.exports = {
     async getUsers(req, res) {
@@ -25,9 +26,20 @@ module.exports = {
     },
 
     async createUser(req, res) {
-        const { name, email, password, cellphone, cpf, address } = req.body;
-        let user;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
 
+        const { name, email, password, cellphone, cpf, address } = req.body;
+
+        let user = await User.findOne({
+            where: { email: email, is_deleted: false },
+        });
+
+        if (user) {
+            return res.status(400).json({ err: "Couldn't register this user" });
+        }
         try {
             user = await User.create({
                 name,

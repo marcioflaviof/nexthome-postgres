@@ -37,7 +37,6 @@ routes.delete("/delete/user/:id", UserController.deleteUser);
 routes.get("/house/:id", HouseController.getHouse);
 routes.get("/houses", HouseController.getHouses);
 routes.get("/houses/user/:user_id", HouseController.getUserHouses);
-routes.get("/houses/user/:user_id/:house_id", HouseController.getOneUserHouse);
 routes.post("/register/house/:user_id", HouseController.createHouse);
 routes.put("/update/house/:id", HouseController.updateHouse);
 routes.put("/houses", HouseController.getHousesFilter);

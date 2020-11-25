@@ -41,28 +41,6 @@ module.exports = {
         return res.json(houses);
     },
 
-    async getOneUserHouse(req, res) {
-        const { user_id, house_id } = req.params;
-
-        let houses;
-
-        try {
-            houses = await House.findOne({
-                where: {
-                    user_id: user_id,
-                    house_id: house_id,
-                    is_deleted: false,
-                },
-            });
-        } catch (error) {
-            return res.status(400).json({ err: error });
-        }
-
-        if (!houses) return res.status(400).json({ err: "House not found" });
-
-        return res.json(houses);
-    },
-
     async getHousesFilter(req, res) {
         let { to, min_price, max_price, bed, bath } = req.body;
         let array_and = [{ is_deleted: false }];

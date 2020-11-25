@@ -168,10 +168,6 @@ module.exports = {
             return res.status(400).json({ err: "Appointment not found" });
         }
 
-        if (!bcrypt.compareSync(password, visit.house.owner.password)) {
-            return res.status(400).json({ err: "Wrong password" });
-        }
-
         visit.update({ is_deleted: true });
 
         return res.json(visit);

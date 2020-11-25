@@ -41,35 +41,50 @@ module.exports = {
         return res.json(houses);
     },
 
-    async getHousesFilter(req,res) {
-        let {to,min_price,max_price,bed,bath} = req.body
-        let array_and = [{is_deleted: false}];
+    async getOneUserHouse(req, res) {
+        const { user_id, house_id } = req.params;
+        const houses = await House.findOne({
+            where: {
+                user_id: user_id,
+                house_id: house_id,
+                is_deleted: false,
+            },
+        });
 
-        if(to!=null){
-            array_and.push({to_sell: to})
-        }
-        
-        if(bed>=1){
-            array_and.push({number_bedroom: bed})
+        if (!houses) return res.status(400).json({ err: "House not found" });
+
+        return res.json(houses);
+    },
+
+    async getHousesFilter(req, res) {
+        let { to, min_price, max_price, bed, bath } = req.body;
+        let array_and = [{ is_deleted: false }];
+
+        if (to != null) {
+            array_and.push({ to_sell: to });
         }
 
-        if(bath>=1){
-            array_and.push({number_bath: bath})
+        if (bed >= 1) {
+            array_and.push({ number_bedroom: bed });
         }
 
-        if(!min_price||min_price<0){
-            min_price = 0
+        if (bath >= 1) {
+            array_and.push({ number_bath: bath });
         }
 
-        if(!max_price||max_price<0){
-            max_price = 9999999999999999
+        if (!min_price || min_price < 0) {
+            min_price = 0;
         }
 
-        array_and.push({price:{[Op.between]:[min_price,max_price]}})
+        if (!max_price || max_price < 0) {
+            max_price = 9999999999999999;
+        }
+
+        array_and.push({ price: { [Op.between]: [min_price, max_price] } });
 
         const houses = await House.findAll({
-            where: {[Op.and]: array_and} 
-        })
+            where: { [Op.and]: array_and },
+        });
 
         if (!houses) return res.status(400).json({ err: "House not found" });
 

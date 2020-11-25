@@ -76,6 +76,7 @@ module.exports = {
         let hours = [];
         let now = new Date(day);
         now.setDate(now.getDate() + 1);
+        console.log(now)
         let hourVisit = [];
 
         let visits = await Visit.findAll({
@@ -94,23 +95,28 @@ module.exports = {
             hourVisit.push(visit.day_hour_visit.getHours());
         });
 
-        const available = await Available.findOne({
-            where: {
-                house_id: house_id,
-                day_week: now.getDay(),
-                is_deleted: false,
-            },
-        });
-        for (
-            let index = available.initial_hour;
-            index < available.final_hour;
-            index++
-        ) {
-            if (!hourVisit.includes(index)) {
-                now.setHours(index);
-                hours.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+        try{
+            const available = await Available.findOne({
+                where: {
+                    house_id: house_id,
+                    day_week: now.getDay(),
+                    is_deleted: false,
+                },
+            });
+            for (
+                let index = available.initial_hour;
+                index < available.final_hour;
+                index++
+            ) {
+                if (!hourVisit.includes(index)) {
+                    now.setHours(index);
+                    hours.push(date.format(now, "YYYY/MM/DD HH:mm:ss"));
+                }
             }
+        }catch(error){
+            return res.status(400).json({ err: "Can not found availables to requested day" });
         }
+        
 
         return res.json({ horas: hours });
     },
@@ -118,6 +124,9 @@ module.exports = {
     async getDates(req, res) {
         const { house_id, range } = req.params;
         let now = new Date();
+        now.setMinutes(0);
+        now.setSeconds(0);
+        now.setMilliseconds(0);
         now.setDate(now.getDate() + 1);
 
         if (range >= 31) {

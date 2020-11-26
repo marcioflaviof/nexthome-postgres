@@ -53,6 +53,7 @@ module.exports = {
                 },
                 include: {
                     association: "house_visit",
+                    where: { is_deleted: false },
                     include: {
                         association: "user",
                         attributes: ["id", "name", "email", "cellphone"],

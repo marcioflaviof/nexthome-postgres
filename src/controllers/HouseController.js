@@ -69,6 +69,7 @@ module.exports = {
 
         const houses = await House.findAll({
             where: { [Op.and]: array_and },
+            include: ["owner", "house_picture"],
         });
 
         if (!houses) return res.status(400).json({ err: "House not found" });

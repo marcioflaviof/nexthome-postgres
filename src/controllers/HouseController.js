@@ -34,7 +34,7 @@ module.exports = {
                 user_id: user_id,
                 is_deleted: false,
             },
-            include: ["house_picture"],
+            include: ["house_picture", "house_detail", "availables"],
         });
 
         if (!houses) return res.status(400).json({ err: "House not found" });

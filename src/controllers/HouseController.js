@@ -145,7 +145,7 @@ module.exports = {
 
         const house = await House.findOne({
             where: { id: id },
-            include: "owner",
+            include: ["owner", "availables"],
             is_deleted: false,
         });
 

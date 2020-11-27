@@ -80,11 +80,10 @@ module.exports = {
 
     async deleteUser(req, res) {
         const id = req.params.id;
-        const { email, password } = req.body;
 
         const user = await User.findByPk(id);
 
-        if (!user) {
+        if (!user || user.is_deleted) {
             return res.status(400).json({ err: "User not found" });
         }
 

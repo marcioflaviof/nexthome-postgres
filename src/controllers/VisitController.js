@@ -2,7 +2,7 @@ const House = require("../models/House");
 const User = require("../models/User");
 const Visit = require("../models/Visit");
 const bcrypt = require("bcryptjs");
-const { where } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 module.exports = {
     async getVisit(req, res) {
@@ -58,12 +58,14 @@ module.exports = {
                         association: "user",
                         attributes: ["id", "name", "email", "cellphone"],
                     },
+
                     attributes: [
-                        "id",
                         "day_hour_visit",
                         "is_confirmed",
                         "house_id",
+                        "id",
                     ],
+                    where: { is_deleted: false },
                 },
             });
         } catch (err) {
@@ -126,7 +128,20 @@ module.exports = {
             return res.status(400).json({ err: "Appointment not found" });
         }
 
-        visit.update({ is_confirmed });
+        const date = visit.day_hour_visit;
+        const house = visit.house_id;
+
+        await Visit.update(
+            { is_deleted: true },
+            {
+                where: {
+                    [Op.and]: [{ day_hour_visit: date }, { house_id: house }],
+                },
+            }
+        );
+        visit.update({ is_confirmed: true });
+        await Visit.update({ is_deleted: false }, { where: { id: id } });
+
         return res.json(visit);
     },
 

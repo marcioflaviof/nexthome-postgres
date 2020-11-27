@@ -131,6 +131,7 @@ module.exports = {
 
     async updateHouse(req, res) {
         const id = req.params.id;
+        const id_available = req.params.id_available;
         const {
             password,
             land_size,
@@ -170,7 +171,7 @@ module.exports = {
 
         const available = await Available.findOne({
             where: {
-                id: id,
+                id: id_available,
                 day_week: day_week,
                 is_deleted: false,
             },

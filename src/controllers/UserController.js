@@ -83,7 +83,7 @@ module.exports = {
 
         const user = await User.findByPk(id);
 
-        if (!user) {
+        if (!user || user.is_deleted) {
             return res.status(400).json({ err: "User not found" });
         }
 

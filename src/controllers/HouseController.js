@@ -34,6 +34,7 @@ module.exports = {
                 user_id: user_id,
                 is_deleted: false,
             },
+            include: ["house_picture", "house_detail", "availables"],
         });
 
         if (!houses) return res.status(400).json({ err: "House not found" });
@@ -130,6 +131,7 @@ module.exports = {
 
     async updateHouse(req, res) {
         const id = req.params.id;
+        const id_available = req.params.id_available;
         const {
             password,
             land_size,
@@ -140,11 +142,14 @@ module.exports = {
             number_bath,
             local,
             to_sell,
+            initial_hour,
+            final_hour,
+            day_week,
         } = req.body;
 
         const house = await House.findOne({
             where: { id: id },
-            include: "owner",
+            include: ["owner", "availables"],
             is_deleted: false,
         });
 
@@ -166,6 +171,28 @@ module.exports = {
             local,
             to_sell,
         });
+
+        const available = await Available.findOne({
+            where: {
+                id: id_available,
+                day_week: day_week,
+                is_deleted: false,
+            },
+            include: {
+                association: "house",
+                include: { association: "owner" },
+            },
+        });
+
+        if (!available || available.is_deleted == true) {
+            return res.status(400).json({ err: "Available not found" });
+        }
+
+        if (!bcrypt.compareSync(password, available.house.owner.password)) {
+            return res.status(400).json({ err: "Wrong password" });
+        }
+
+        available.update({ initial_hour, final_hour });
 
         return res.json(house);
     },

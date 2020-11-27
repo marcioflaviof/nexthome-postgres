@@ -80,7 +80,6 @@ module.exports = {
 
     async deleteUser(req, res) {
         const id = req.params.id;
-        const { email, password } = req.body;
 
         const user = await User.findByPk(id);
 
@@ -88,15 +87,8 @@ module.exports = {
             return res.status(400).json({ err: "User not found" });
         }
 
-        if (
-            user.email == email &&
-            bcrypt.compareSync(password, user.password)
-        ) {
-            user.update({ is_deleted: true });
+        user.update({ is_deleted: true });
 
-            return res.json(user);
-        }
-
-        return res.status(400).json({ err: "Can't delete" });
+        return res.json(user);
     },
 };

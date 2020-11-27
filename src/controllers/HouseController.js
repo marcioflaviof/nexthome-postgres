@@ -168,6 +168,28 @@ module.exports = {
             to_sell,
         });
 
+        const available = await Available.findOne({
+            where: {
+                id: id,
+                day_week: day_week,
+                is_deleted: false,
+            },
+            include: {
+                association: "house",
+                include: { association: "owner" },
+            },
+        });
+
+        if (!available || available.is_deleted == true) {
+            return res.status(400).json({ err: "Available not found" });
+        }
+
+        if (!bcrypt.compareSync(password, available.house.owner.password)) {
+            return res.status(400).json({ err: "Wrong password" });
+        }
+
+        available.update({ initial_hour, final_hour });
+
         return res.json(house);
     },
 

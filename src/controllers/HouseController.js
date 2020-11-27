@@ -142,6 +142,9 @@ module.exports = {
             number_bath,
             local,
             to_sell,
+            initial_hour,
+            final_hour,
+            day_week,
         } = req.body;
 
         const house = await House.findOne({
